@@ -1,0 +1,392 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Yamin — Tech Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Yamin — Tech-themed personal site and portfolio" />
+  <meta name="theme-color" content="#0ff" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Yamin — Tech Portfolio" />
+  <meta property="og:description" content="Tech-themed personal site and portfolio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0a0a0a/00ffff&text=YAMIN" />
+
+  <style>
+    /* --- Tech Theme: Neon on dark, grid, glow, and subtle animation --- */
+    :root {
+      --bg: #0a0a0f;
+      --panel: #101018;
+      --text: #e6f7ff;
+      --muted: #9fb4c2;
+      --primary: #00ffff;     /* cyan */
+      --accent: #ff00ff;      /* magenta */
+      --ok: #00ff9d;          /* neon green */
+      --warn: #ffd166;        /* amber */
+      --danger: #ff4d6d;      /* pink/red */
+      --card: #121926;
+      --ring: rgba(0, 255, 255, 0.3);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: radial-gradient(1000px 500px at 10% 10%, rgba(0,255,255,0.08), transparent),
+                  radial-gradient(800px 400px at 90% 30%, rgba(255,0,255,0.05), transparent),
+                  var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* Subtle circuit/grid overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(0,255,255,0.06) 2px, transparent 2px),
+        linear-gradient(transparent 23px, rgba(255,0,255,0.04) 24px),
+        linear-gradient(90deg, transparent 23px, rgba(0,255,255,0.04) 24px);
+      background-size: 24px 24px, 24px 24px, 24px 24px;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px;
+      border: 1px solid rgba(0,255,255,0.15);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(16,24,32,0.7), rgba(16,24,32,0.4));
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 40px rgba(0,255,255,0.12), inset 0 0 20px rgba(255,0,255,0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background:
+        conic-gradient(from 180deg at 50% 50%, var(--primary), var(--accent), var(--primary));
+      box-shadow: 0 0 30px rgba(0,255,255,0.4);
+      position: relative;
+      isolation: isolate;
+    }
+    .logo::after {
+      content: "Y";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #041314;
+      text-shadow: 0 0 6px rgba(0,255,255,0.6);
+    }
+    .title h1 {
+      margin: 0;
+      font-size: clamp(24px, 5vw, 36px);
+      letter-spacing: 0.02em;
+    }
+    .title p {
+      margin: 4px 0 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,255,255,0.15);
+      background: rgba(12,16,24,0.6);
+      color: var(--text);
+      cursor: pointer;
+      transition: 140ms ease transform, 140ms ease box-shadow;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px var(--ring);
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 28px;
+      padding: 28px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(10,20,30,0.7), rgba(10,20,30,0.5));
+      border: 1px solid rgba(255,0,255,0.15);
+      box-shadow: 0 0 40px rgba(255,0,255,0.12), inset 0 0 24px rgba(0,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h2 {
+      font-size: clamp(22px, 5vw, 32px);
+      margin: 0 0 8px;
+    }
+    .hero p { color: var(--muted); margin: 0 0 16px; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #041314;
+      font-weight: 700;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 0 24px rgba(0,255,255,0.4);
+      cursor: pointer;
+      transition: 160ms ease transform, 160ms ease filter;
+    }
+    .cta:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    /* Sections */
+    section {
+      margin-top: 28px;
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid rgba(0,255,255,0.12);
+      border-radius: 20px;
+      box-shadow: 0 0 24px rgba(0,255,255,0.08);
+    }
+    section h3 { margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(8,12,18,0.9), rgba(8,12,18,0.7));
+      border: 1px solid rgba(255,0,255,0.12);
+      box-shadow: 0 0 18px rgba(255,0,255,0.08);
+    }
+    .card h4 { margin: 0 0 6px; }
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #041314;
+      background: var(--primary);
+      margin-right: 8px;
+    }
+
+    /* Footer */
+    footer {
+      margin: 40px 0 24px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Matrix-ish animation canvas */
+    canvas#matrix {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      filter: blur(0.3px) saturate(120%);
+      pointer-events: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 640px) {
+      nav { justify-content: center; }
+      header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1>Yamin Hussain</h1>
+          <p>Service Desk Senior Analyst • Tech enthusiast • Harrogate</p>
+        </div>
+      </div>
+      <nav aria-label="Primary">
+        <a class="nav-btn" href="#about">About</a>
+        <a class="nav-btn" href="#projects">Projects</a>
+        <a class="nav-btn" href="#skills">Skills</a>
+        <a class="nav-btn" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <canvas id="matrix" aria-hidden="true"></canvas>
+      <h2>Turning support insights into robust, user-first solutions.</h2>
+      <p>
+        I’m Yamin, passionate about streamlining tech experiences, automating repeat tasks,
+        and keeping services rock solid. Explore my projects and get in touch.
+      </p>
+      <button class="cta" id="ctaBtn">▶ View Projects</button>
+    </section>
+
+    <section id="about">
+      <h3>About Me</h3>
+      <p>
+        I work at the intersection of people and technology, resolving issues and
+        improving service delivery. I enjoy building small tools, documenting
+        processes clearly, and using data to prevent future incidents.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h4>Focus Areas</h4>
+          <span class="tag">Automation</span>
+          <span class="tag">Scripting</span>
+          <span class="tag">ITSM</span>
+          <span class="tag">Service Quality</span>
+          <span class="tag">Active Directory</span>
+        </div>
+        <div class="card">
+          <h4>Values</h4>
+          <p>Empathy, clarity, reliability, and continuous improvement.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h3>Projects</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>Techbar Automation with Feedback</h4>
+          <p>Built a TechBar check in flow using iPad buttons + Power Automate: first button notifies a Teams channel when a user is waiting and second confirms attendance. Events are automatically logged to SharePoint with precise timestamps to track queue times and service performance.</p>
+          <p><strong>Tech:</strong> Python, CSV, SNOW, Azure, PowerApps, Power Automate</p>
+        </div>
+        <div class="card">
+          <h4>On call Dashboard</h4>
+          <p>Minimal web dashboard summarising current incidents, SLAs, and alerts.</p>
+          <p><strong>Tech:</strong> HTML, JS, APIs</p>
+        </div>
+        <div class="card">
+          <h4>Self Service Docs</h4>
+          <p>Clear, searchable knowledge base pages that reduce repetitive support tasks.</p>
+          <p><strong>Tech:</strong> Markdown, static site</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h3>Skills</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>Service Desk</h4>
+          <p>Incident handling, SLA awareness, ticket maintenance, stakeholder management, escalations, reporting.</p>
+        </div>
+        <div class="card">
+          <h4>Tooling</h4>
+          <p>PowerShell, Python, Excel, Sharepoint, Power Apps, Power Automate, APIs, ITSM platforms.</p>
+        </div>
+        <div class="card">
+          <h4>Practices</h4>
+          <p>Documentation, root cause analysis, automation first thinking.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h3>Contact</h3>
+      <p>Want to collaborate or say hi? Reach out:</p>
+      <div class="grid">
+        <div class="card">
+          <h4>Email</h4>
+          <p><a href="mailto:yaminhussain5@gmail.com">yaminhussain5@gmail.com</a></p>
+        </div>
+        <div class="card">
+          <h4>LinkedIn</h4>
+          <p><a href="#" target="_blank" rel="noopener">https://www.linkedin.com/in/yamin-hussain-a176bb20b
+
+</a></p>
+        </div>
+        <div class="card">
+          <h4>GitHub</h4>
+          <p><a href="#" target="_blank" rel="noopener">Add your GitHub URL</a></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Yamin Hussain SDA.
+    </footer>
+  </div>
+
+  <script>
+    // Smooth scroll for CTA
+    document.getElementById("ctaBtn").addEventListener("click", () => {
+      document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Set current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Simple matrix-like animation
+    (function matrixRain(){
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      const letters = "01█░▓▌▐⎺⎻⎼⎽⎺⎻⎼⎽";
+      const fontSize = 14;
+      const columns = Math.floor(canvas.width / fontSize);
+      const drops = Array(columns).fill(0);
+
+      function draw() {
+        ctx.fillStyle = "rgba(4, 12, 16, 0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "rgba(0,255,255,0.85)";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters[Math.floor(Math.random() * letters.length)];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+          ctx.fillText(text, x, y);
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
