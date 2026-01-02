@@ -218,6 +218,25 @@
       pointer-events: none;
     }
 
+    /* --- NEW: small helpers for Hangman controls --- */
+    .btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,0,255,0.2);
+      background: #121a27;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .btn:hover { box-shadow: 0 0 12px rgba(255,0,255,0.18); }
+    .input {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,255,255,0.15);
+      background: #0e1726;
+      color: var(--text);
+    }
+    .board { margin-top: 12px; }
+
     /* Responsive tweaks */
     @media (max-width: 640px) {
       nav { justify-content: center; }
@@ -239,6 +258,8 @@
         <a class="nav-btn" href="#about">About</a>
         <a class="nav-btn" href="#projects">Projects</a>
         <a class="nav-btn" href="#skills">Skills</a>
+        <!-- NEW: Hangman link -->
+        <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
       </nav>
     </header>
@@ -315,6 +336,35 @@
       </div>
     </section>
 
+    <!-- ======= NEW: HANGMAN (Text-Based) ======= -->
+    <section id="hangman">
+      <h3>Hangman (Text-Based)</h3>
+      <p class="hint">
+        Guess the word by choosing letters. You have <strong>6 wrong attempts</strong> before the hangman is complete.
+      </p>
+
+      <div class="game-controls" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <label>
+          Difficulty:
+          <select id="hmDifficulty" class="input">
+            <option value="easy">Easy (4–6 letters)</option>
+            <option value="medium" selected>Medium (5–8)</option>
+            <option value="hard">Hard (7–10)</option>
+          </select>
+        </label>
+        <button id="hmNewGame" class="btn">New Game</button>
+      </div>
+
+      <div class="board" id="hmBoard">
+        <pre id="hmGallows" aria-hidden="true" style="background:#0e1726;padding:12px;border-radius:12px;border:1px solid rgba(0,255,255,0.18);color:#89a3b6;"></pre>
+        <div id="hmWord" style="font-size:22px;font-weight:700;letter-spacing:0.12em;margin-top:8px;"></div>
+        <div id="hmStatus" class="hint" style="margin-top:8px;"></div>
+        <div id="hmKeyboard" style="display:grid;grid-template-columns:repeat(13,1fr);gap:6px;margin-top:12px;"></div>
+        <div id="hmGuessed" class="hint" style="margin-top:6px;"></div>
+        <div id="hmShare" class="share" style="white-space:pre-wrap;margin-top:12px;"></div>
+      </div>
+    </section>
+
     <section id="contact">
       <h3>Contact</h3>
       <p>Want to collaborate or say hi? Reach out:</p>
@@ -325,9 +375,7 @@
         </div>
         <div class="card">
           <h4>LinkedIn</h4>
-          <p><a href="#" target="_blank" rel="noopener">https://www.linkedin.com/in/yamin-hussain-a176bb20b
-
-</a></p>
+          <p><a href="#" target="_blank" rel="noopener">https://www.linkedin.com/in/yamin-hussain-a176bb20b</a></p>
         </div>
         <div class="card">
           <h4>GitHub</h4>
@@ -386,6 +434,178 @@
         requestAnimationFrame(draw);
       }
       draw();
+    })();
+
+    /* ======= HANGMAN (Text-Based, with dictionary) — NEW ======= */
+    (function hangman() {
+      const MAX_WRONG = 6;
+
+      // ASCII gallows for 0..6 wrong guesses
+      const GALLOWS = [
+`  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========`,
+`  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========`];
+
+      // Dictionary (lowercase, letters only). You can expand this list.
+      const DICTIONARY = [
+        "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench","bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk","chart","chase","check","chess","chief","child","clean","clear","clock","close","cloud","coach","coast","color","count","cover","craft","crane","crash","crazy","cream","crowd","dance","debug","delta","depth","daily","draft","drive","earth","eager","email","energy","engine","error","event","every","exact","exist","extra","faith","fancy","fault","field","fight","final","flame","focus","force","fresh","front","fruit","globe","grant","graph","green","guess","happy","harsh","heart","heavy","honor","human","ideal","image","index","input","issue","jelly","joint","judge","knock","label","laser","lemon","level","light","limit","linen","logic","lucky","lunch","magic","major","match","metal","model","money","month","motor","mount","music","noble","noise","north","novel","nurse","occur","ocean","offer","optic","order","other","paint","panel","paper","party","peace","phone","pilot","pitch","pixel","plant","point","power","press","price","prime","print","proud","proxy","query","quick","quiet","radio","raise","range","ratio","react","ready","relax","reply","reset","river","robot","route","royal","ruler","scale","scene","scope","score","serve","shift","shirt","shock","short","smart","smile","smoke","solid","solve","sound","south","space","spare","speak","speed","spice","spike","sport","staff","stage","stair","stand","start","steel","stick","stone","store","storm","story","study","style","sugar","suite","super","sweet","table","taste","teach","techy","tiger","tight","title","today","token","tools","trace","track","trade","train","trust","truth","tutor","under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat","wheel","while","white","whole","world","worry","worth","write","young","zesty"
+      ];
+
+      const els = {
+        gallows: document.getElementById("hmGallows"),
+        word: document.getElementById("hmWord"),
+        status: document.getElementById("hmStatus"),
+        keyboard: document.getElementById("hmKeyboard"),
+        guessed: document.getElementById("hmGuessed"),
+        share: document.getElementById("hmShare"),
+        newGame: document.getElementById("hmNewGame"),
+        difficulty: document.getElementById("hmDifficulty")
+      };
+
+      let target = "";
+      let guessed = new Set();
+      let wrong = 0;
+      let over = false;
+
+      function filterByDifficulty(list, mode) {
+        let min = 4, max = 10;
+        if (mode === "easy") { min = 4; max = 6; }
+        else if (mode === "medium") { min = 5; max = 8; }
+        else if (mode === "hard") { min = 7; max = 10; }
+        return list.filter(w => w.length >= min && w.length <= max);
+      }
+
+      function pickTarget() {
+        const pool = filterByDifficulty(DICTIONARY, els.difficulty.value);
+        return pool[Math.floor(Math.random() * pool.length)];
+      }
+
+      function maskWord() {
+        return target.split("").map(ch => guessed.has(ch) ? ch.toUpperCase() : "_").join(" ");
+      }
+
+      function renderKeyboard() {
+        els.keyboard.innerHTML = "";
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (const ch of alphabet) {
+          const btn = document.createElement("button");
+          btn.className = "btn";
+          btn.textContent = ch;
+          btn.style.padding = "8px";
+          btn.style.fontWeight = "700";
+          btn.disabled = over || guessed.has(ch.toLowerCase());
+          btn.addEventListener("click", () => onGuess(ch.toLowerCase()));
+          els.keyboard.appendChild(btn);
+        }
+      }
+
+      function updateStatus(message) {
+        els.status.textContent = message || `Wrong: ${wrong}/${MAX_WRONG}`;
+        els.guessed.textContent = "Guessed: " + [...guessed].map(c => c.toUpperCase()).join(" ");
+        els.gallows.textContent = GALLOWS[wrong];
+        els.word.textContent = maskWord();
+      }
+
+      function onGuess(letter) {
+        if (over) return;
+        if (!/^[a-z]$/.test(letter)) return;
+        if (guessed.has(letter)) return;
+
+        guessed.add(letter);
+        if (!target.includes(letter)) {
+          wrong++;
+        }
+
+        const won = target.split("").every(ch => guessed.has(ch));
+        if (won) {
+          over = true;
+          updateStatus(`🎉 You win! The word was ${target.toUpperCase()}.`);
+          els.share.textContent = `Hangman — Solved with ${wrong} wrong guesses.\nWord: ${target.toUpperCase()}`;
+        } else if (wrong >= MAX_WRONG) {
+          over = true;
+          updateStatus(`❌ Game over. The word was ${target.toUpperCase()}.`);
+          els.share.textContent = `Hangman — Failed with ${wrong}/${MAX_WRONG} wrong guesses.\nWord: ${target.toUpperCase()}`;
+        } else {
+          updateStatus();
+        }
+
+        renderKeyboard();
+      }
+
+      function newGame() {
+        target = pickTarget();
+        guessed = new Set();
+        wrong = 0;
+        over = false;
+        els.share.textContent = "";
+        renderKeyboard();
+        updateStatus("New game started. Type letters or use the on-screen keyboard.");
+        // Scroll to game if user clicked New Game from elsewhere
+        // document.getElementById("hangman").scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Keyboard input
+      window.addEventListener("keydown", (e) => {
+        const k = e.key.toLowerCase();
+        if (k.length === 1 && /^[a-z]$/.test(k)) {
+          onGuess(k);
+        } else if (k === "enter") {
+          if (over) newGame();
+        }
+      });
+
+      // Hooks
+      els.newGame.addEventListener("click", newGame);
+      els.difficulty.addEventListener("change", newGame);
+
+      // Init
+      newGame();
     })();
   </script>
 </body>
