@@ -79,162 +79,81 @@
       box-shadow: 0 0 40px rgba(0,255,255,0.12), inset 0 0 20px rgba(255,0,255,0.08);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .brand { display: flex; align-items: center; gap: 14px; }
     .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background:
-        conic-gradient(from 180deg at 50% 50%, var(--primary), var(--accent), var(--primary));
+      width: 48px; height: 48px; border-radius: 10px;
+      background: conic-gradient(from 180deg at 50% 50%, var(--primary), var(--accent), var(--primary));
       box-shadow: 0 0 30px rgba(0,255,255,0.4);
-      position: relative;
-      isolation: isolate;
+      position: relative; isolation: isolate;
     }
     .logo::after {
-      content: "Y";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      color: #041314;
-      text-shadow: 0 0 6px rgba(0,255,255,0.6);
+      content: "Y"; position: absolute; inset: 0; display: grid; place-items: center;
+      font-weight: 800; color: #041314; text-shadow: 0 0 6px rgba(0,255,255,0.6);
     }
-    .title h1 {
-      margin: 0;
-      font-size: clamp(24px, 5vw, 36px);
-      letter-spacing: 0.02em;
-    }
-    .title p {
-      margin: 4px 0 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .title h1 { margin: 0; font-size: clamp(24px, 5vw, 36px); letter-spacing: 0.02em; }
+    .title p { margin: 4px 0 0 0; color: var(--muted); font-size: 14px; }
 
-    nav {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    nav { display: flex; gap: 12px; flex-wrap: wrap; }
     .nav-btn {
-      padding: 10px 14px;
-      border-radius: 12px;
+      padding: 10px 14px; border-radius: 12px;
       border: 1px solid rgba(0,255,255,0.15);
-      background: rgba(12,16,24,0.6);
-      color: var(--text);
-      cursor: pointer;
-      transition: 140ms ease transform, 140ms ease box-shadow;
+      background: rgba(12,16,24,0.6); color: var(--text);
+      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow;
     }
-    .nav-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 16px var(--ring);
-    }
+    .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
 
     /* Hero */
     .hero {
-      margin-top: 28px;
-      padding: 28px;
-      border-radius: 20px;
+      margin-top: 28px; padding: 28px; border-radius: 20px;
       background: linear-gradient(180deg, rgba(10,20,30,0.7), rgba(10,20,30,0.5));
       border: 1px solid rgba(255,0,255,0.15);
       box-shadow: 0 0 40px rgba(255,0,255,0.12), inset 0 0 24px rgba(0,255,255,0.08);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
-    .hero h2 {
-      font-size: clamp(22px, 5vw, 32px);
-      margin: 0 0 8px;
-    }
+    .hero h2 { font-size: clamp(22px, 5vw, 32px); margin: 0 0 8px; }
     .hero p { color: var(--muted); margin: 0 0 16px; }
     .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      color: #041314;
-      font-weight: 700;
-      border-radius: 12px;
-      border: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 16px; background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #041314; font-weight: 700; border-radius: 12px; border: none;
       box-shadow: 0 0 24px rgba(0,255,255,0.4);
-      cursor: pointer;
-      transition: 160ms ease transform, 160ms ease filter;
+      cursor: pointer; transition: 160ms ease transform, 160ms ease filter;
     }
     .cta:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
     /* Sections */
-    section {
-      margin-top: 28px;
-      padding: 24px;
-      background: var(--card);
-      border: 1px solid rgba(0,255,255,0.12);
-      border-radius: 20px;
+    section { margin-top: 28px; padding: 24px; background: var(--card);
+      border: 1px solid rgba(0,255,255,0.12); border-radius: 20px;
       box-shadow: 0 0 24px rgba(0,255,255,0.08);
     }
     section h3 { margin-top: 0; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
     .card {
-      padding: 16px;
-      border-radius: 14px;
+      padding: 16px; border-radius: 14px;
       background: linear-gradient(180deg, rgba(8,12,18,0.9), rgba(8,12,18,0.7));
-      border: 1px solid rgba(255,0,255,0.12);
-      box-shadow: 0 0 18px rgba(255,0,255,0.08);
+      border: 1px solid rgba(255,0,255,0.12); box-shadow: 0 0 18px rgba(255,0,255,0.08);
     }
     .card h4 { margin: 0 0 6px; }
-    .tag {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: #041314;
-      background: var(--primary);
-      margin-right: 8px;
-    }
+    .tag { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; color: #041314; background: var(--primary); margin-right: 8px; }
 
     /* Footer */
-    footer {
-      margin: 40px 0 24px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 14px;
-    }
+    footer { margin: 40px 0 24px; color: var(--muted); text-align: center; font-size: 14px; }
 
     /* Matrix-ish animation canvas */
     canvas#matrix {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.15;
-      filter: blur(0.3px) saturate(120%);
-      pointer-events: none;
+      position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.15;
+      filter: blur(0.3px) saturate(120%); pointer-events: none;
     }
 
     /* Helpers for controls */
     .btn {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,0,255,0.2);
-      background: #121a27;
-      color: var(--text);
-      cursor: pointer;
+      padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2);
+      background: #121a27; color: var(--text); cursor: pointer;
     }
     .btn:hover { box-shadow: 0 0 12px rgba(255,0,255,0.18); }
     .input {
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(0,255,255,0.15);
-      background: #0e1726;
-      color: var(--text);
-      width: 100%;
+      padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,255,255,0.15);
+      background: #0e1726; color: var(--text); width: 100%;
     }
     .board { margin-top: 12px; }
 
@@ -242,22 +161,17 @@
     .hint { color: var(--muted); font-size: 0.92rem; }
 
     /* Earnings Calculator styles */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
-    .tile {
-      border: 1px solid rgba(0,255,255,0.12);
-      background: #0e1726;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 8px;
-    }
+    .tile { border: 1px solid rgba(0,255,255,0.12); background: #0e1726; border-radius: 12px; padding: 12px; margin-top: 8px; }
     .tile .label { color: var(--muted); font-size: 0.95rem; }
     .amt { font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
     .amt.ok { color: var(--ok); }
+
+    /* Variable week list */
+    .weeks-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; }
+    .week-item { background:#0e1726; border:1px solid rgba(0,255,255,0.12); border-radius:10px; padding:10px; }
+    .week-item label { font-size: 0.85rem; color: var(--muted); display:block; margin-bottom: 6px; }
 
     /* Responsive tweaks */
     @media (max-width: 640px) {
@@ -280,7 +194,7 @@
         <a class="nav-btn" href="#about">About</a>
         <a class="nav-btn" href="#projects">Projects</a>
         <a class="nav-btn" href="#skills">Skills</a>
-        <a class="nav-btn" href="#calculator">Earnings Calculator</a> <!-- NEW -->
+        <a class="nav-btn" href="#calculator">Earnings Calculator</a>
         <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
       </nav>
@@ -340,12 +254,11 @@
       </div>
     </section>
 
-    <!-- ======= NEW: Earnings Calculator ======= -->
+    <!-- ======= Earnings Calculator (Fixed + Variable hours) ======= -->
     <section id="calculator">
       <h3>Earnings Calculator</h3>
       <p class="hint">
-        Enter your hourly rate and weekly hours. Optionally add an annual salary to combine both.
-        Totals show for <strong>weekly</strong> and <strong>monthly</strong>.
+        Enter your hourly rate and choose how to input hours: a fixed weekly amount or variable weekly entries. Monthly totals adapt automatically.
       </p>
 
       <!-- Inputs -->
@@ -369,25 +282,44 @@
         </div>
 
         <div class="calc-field">
+          <label>Hours input mode</label>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <label><input type="radio" name="calcMode" id="calcModeFixed" value="fixed" checked /> Fixed weekly hours</label>
+            <label><input type="radio" name="calcMode" id="calcModeVar" value="variable" /> Variable weekly entries</label>
+          </div>
+          <p class="hint">Switch to variable if your weekly hours change.</p>
+        </div>
+
+        <!-- Fixed weekly hours -->
+        <div class="calc-field" id="fixedFields">
           <label for="calcHours">Hours per week</label>
           <input type="number" id="calcHours" class="input" min="0" step="0.01" placeholder="e.g., 40" />
           <p class="hint">Typical weekly hours.</p>
+
+          <label for="calcMonthBasis" style="margin-top:10px;">Monthly basis</label>
+          <select id="calcMonthBasis" class="input" aria-label="Monthly basis">
+            <option value="4" selected>4‑week month (x4)</option>
+            <option value="avg">Calendar average (52 ÷ 12 ≈ 4.333)</option>
+          </select>
+          <p class="hint">How weekly converts to monthly.</p>
+        </div>
+
+        <!-- Variable weekly hours list -->
+        <div class="calc-field" id="variableFields" style="display:none;">
+          <label>Weekly entries</label>
+          <div class="weeks-list" id="weeksList"></div>
+          <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
+            <button class="btn" id="addWeekBtn">+ Add week</button>
+            <button class="btn" id="removeWeekBtn">− Remove last</button>
+            <button class="btn" id="clearWeeksBtn">Clear all</button>
+          </div>
+          <p class="hint">Enter hours for each week you worked this month. Monthly hourly earnings = sum of all week hours × hourly rate.</p>
         </div>
 
         <div class="calc-field">
           <label for="calcAnnual">Annual salary (optional)</label>
           <input type="number" id="calcAnnual" class="input" min="0" step="0.01" placeholder="e.g., 52000" />
           <p class="hint">Combined with hourly earnings.</p>
-        </div>
-
-        <!-- NEW: Monthly basis selector -->
-        <div class="calc-field">
-          <label for="calcMonthBasis">Monthly basis</label>
-          <select id="calcMonthBasis" class="input" aria-label="Monthly basis">
-            <option value="4" selected>4‑week month (x4)</option>
-            <option value="avg">Calendar average (52 ÷ 12 ≈ 4.333)</option>
-          </select>
-          <p class="hint">Choose how to convert weekly to monthly.</p>
         </div>
       </div>
 
@@ -397,37 +329,59 @@
       <!-- Outputs -->
       <div class="grid" aria-live="polite" style="margin-top:12px;">
         <div class="card">
-          <h4>Weekly Totals</h4>
+          <h4>Weekly View</h4>
           <div class="tile">
-            <div class="label">Hourly earnings</div>
+            <div class="label" id="weeklyLabel">Hourly earnings (fixed week)</div>
             <div id="calcHourlyWeek" class="amt"></div>
           </div>
           <div class="tile">
-            <div class="label">Salary portion</div>
+            <div class="label">Salary portion (weekly)</div>
             <div id="calcSalaryWeek" class="amt"></div>
           </div>
           <div class="tile">
-            <div class="label">Total income</div>
+            <div class="label" id="weeklyTotalLabel">Total income (weekly)</div>
             <div id="calcTotalWeek" class="amt ok"></div>
+          </div>
+          <!-- Variable mode: average weekly info -->
+          <div class="tile" id="avgWeeklyTile" style="display:none;">
+            <div class="label">Average weekly hours (variable)</div>
+            <div id="calcAvgHours" class="amt"></div>
+            <div class="label" style="margin-top:6px;">Average weekly hourly earnings</div>
+            <div id="calcAvgWeeklyEarnings" class="amt"></div>
           </div>
         </div>
 
         <div class="card">
           <h4>Monthly Totals</h4>
           <div class="tile">
-            <div class="label">Hourly earnings</div>
+            <div class="label">Hourly earnings (monthly)</div>
             <div id="calcHourlyMonth" class="amt"></div>
           </div>
           <div class="tile">
-            <div class="label">Salary portion</div>
+            <div class="label">Salary portion (monthly)</div>
             <div id="calcSalaryMonth" class="amt"></div>
           </div>
           <div class="tile">
-            <div class="label">Total income</div>
+            <div class="label">Total income (monthly)</div>
             <div id="calcTotalMonth" class="amt ok"></div>
           </div>
         </div>
       </div>
+
+      <!-- Variable mode: per-week breakdown -->
+      <div class="card" id="perWeekBreakdown" style="display:none; margin-top:12px;">
+        <h4>Per‑week earnings breakdown</h4>
+        <div id="perWeekList" class="weeks-list"></div>
+      </div>
+
+      <p class="hint" style="margin-top:8px;">
+        Assumptions:
+        Weekly salary = Annual ÷ 52.
+        Monthly salary = Annual ÷ 12.
+        Monthly hourly earnings use your selected mode:
+        <em>Fixed weekly</em> with basis (×4 or 52 ÷ 12), or <em>Variable weekly</em> using the sum of all entered hours.
+      </p>
+    </section>
 
     <!-- ======= HANGMAN (Text-Based) ======= -->
     <section id="hangman">
@@ -468,11 +422,11 @@
         </div>
         <div class="card">
           <h4>LinkedIn</h4>
-          <p><a href="https://www.linkedin.com/in/yamin-hussain-a176bb20b" target="_blank" rel="noopener">https://www.linkedin.com/in/yamin-hussain-a176bb20b</a></p>
+          <p><a href="https://www.linkedin.com/in/yamin-hussain-a176bb20b" target="_blank" rel="noopener">linkedin.com/in/yamin-hussain-a176bb20b</a></p>
         </div>
         <div class="card">
           <h4>GitHub</h4>
-          <p><a href="https://github.com/yamin772-cyber" target="_blank" rel="noopener">https://github.com/yamin772-cyber</a></p>
+          <p><a href="https://github.com/yamin772-cyber" target="_blank" rel="noopener">github.com/yamin772-cyber</a></p>
         </div>
       </div>
     </section>
@@ -585,7 +539,6 @@
       |
 =========`];
 
-      // Dictionary (lowercase, letters only).
       const DICTIONARY = [
         "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench","bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk","chart","chase","check","chess","chief","child","clean","clear","clock","close","cloud","coach","coast","color","count","cover","craft","crane","crash","crazy","cream","crowd","dance","debug","delta","depth","daily","draft","drive","earth","eager","email","energy","engine","error","event","every","exact","exist","extra","faith","fancy","fault","field","fight","final","flame","focus","force","fresh","front","fruit","globe","grant","graph","green","guess","happy","harsh","heart","heavy","honor","human","ideal","image","index","input","issue","jelly","joint","judge","knock","label","laser","lemon","level","light","limit","linen","logic","lucky","lunch","magic","major","match","metal","model","money","month","motor","mount","music","noble","noise","north","novel","nurse","occur","ocean","offer","optic","order","other","paint","panel","paper","party","peace","phone","pilot","pitch","pixel","plant","point","power","press","price","prime","print","proud","proxy","query","quick","quiet","radio","raise","range","ratio","react","ready","relax","reply","reset","river","robot","route","royal","ruler","scale","scene","scope","score","serve","shift","shirt","shock","short","smart","smile","smoke","solid","solve","sound","south","space","spare","speak","speed","spice","spike","sport","staff","stage","stair","stand","start","steel","stick","stone","store","storm","story","study","style","sugar","suite","super","sweet","table","taste","teach","techy","tiger","tight","title","today","token","tools","trace","track","trade","train","trust","truth","tutor","under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat","wheel","while","white","whole","world","worry","worth","write","young","zesty"
       ];
@@ -699,77 +652,196 @@
       newGame();
     })();
 
-    /* ======= NEW: Earnings Calculator JS (with monthly basis toggle) ======= */
+    /* ======= Earnings Calculator JS (fixed + variable hours) ======= */
     (function earningsCalc(){
       const els = {
         currency: document.getElementById('calcCurrency'),
         hourly: document.getElementById('calcHourly'),
-        hours: document.getElementById('calcHours'),
         annual: document.getElementById('calcAnnual'),
+
+        modeFixed: document.getElementById('calcModeFixed'),
+        modeVar: document.getElementById('calcModeVar'),
+
+        fixedFields: document.getElementById('fixedFields'),
+        hoursWeek: document.getElementById('calcHours'),
         monthBasis: document.getElementById('calcMonthBasis'),
+
+        variableFields: document.getElementById('variableFields'),
+        weeksList: document.getElementById('weeksList'),
+        addWeekBtn: document.getElementById('addWeekBtn'),
+        removeWeekBtn: document.getElementById('removeWeekBtn'),
+        clearWeeksBtn: document.getElementById('clearWeeksBtn'),
+
         err: document.getElementById('calcError'),
+
         // Outputs
         hourlyWeek: document.getElementById('calcHourlyWeek'),
         salaryWeek: document.getElementById('calcSalaryWeek'),
         totalWeek: document.getElementById('calcTotalWeek'),
+        weeklyLabel: document.getElementById('weeklyLabel'),
+        weeklyTotalLabel: document.getElementById('weeklyTotalLabel'),
+
+        avgWeeklyTile: document.getElementById('avgWeeklyTile'),
+        avgHours: document.getElementById('calcAvgHours'),
+        avgWeeklyEarnings: document.getElementById('calcAvgWeeklyEarnings'),
+
         hourlyMonth: document.getElementById('calcHourlyMonth'),
         salaryMonth: document.getElementById('calcSalaryMonth'),
         totalMonth: document.getElementById('calcTotalMonth'),
+
+        perWeekBreakdown: document.getElementById('perWeekBreakdown'),
+        perWeekList: document.getElementById('perWeekList'),
       };
 
       function fmt(curr, num){
         if (isNaN(num) || !isFinite(num)) return `${curr}—`;
         return `${curr}${num.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
       }
+      function fmtPlain(num){
+        if (isNaN(num) || !isFinite(num)) return '—';
+        return `${num.toLocaleString(undefined,{maximumFractionDigits:2})}`;
+      }
+      function monthMultiplier(basis){ return basis === 'avg' ? (52/12) : 4; }
 
-      function monthMultiplier(basis){
-        // basis: "4" => 4-week fixed month; "avg" => 52/12 ≈ 4.333
-        return basis === 'avg' ? (52/12) : 4;
+      // Variable weeks data model
+      function createWeekRow(index, hoursVal = ''){
+        const div = document.createElement('div');
+        div.className = 'week-item';
+        div.innerHTML = `
+          <label>Week ${index}</label>
+          <input type="number" class="input varHours" min="0" step="0.01" placeholder="e.g., 12" value="${hoursVal}">
+        `;
+        return div;
+      }
+
+      function getVarHours(){
+        const inputs = els.weeksList.querySelectorAll('.varHours');
+        const hours = [];
+        inputs.forEach(inp => {
+          const v = parseFloat(inp.value);
+          if (!isNaN(v)) hours.push(Math.max(0, v));
+        });
+        return hours;
+      }
+
+      function renderPerWeekBreakdown(rate, curr){
+        const hours = getVarHours();
+        els.perWeekList.innerHTML = '';
+        hours.forEach((h, i) => {
+          const item = document.createElement('div');
+          item.className = 'week-item';
+          item.innerHTML = `
+            <label>Week ${i+1} — ${fmtPlain(h)} hrs</label>
+            <div><strong>Earnings:</strong> ${fmt(curr, h * rate)}</div>
+          `;
+          els.perWeekList.appendChild(item);
+        });
+        els.perWeekBreakdown.style.display = hours.length ? 'block' : 'none';
+      }
+
+      function toggleMode(){
+        const isVar = els.modeVar.checked;
+        els.fixedFields.style.display = isVar ? 'none' : 'block';
+        els.variableFields.style.display = isVar ? 'block' : 'none';
+
+        els.weeklyLabel.textContent = isVar ? 'Hourly earnings (average week)' : 'Hourly earnings (fixed week)';
+        els.weeklyTotalLabel.textContent = isVar ? 'Total income (average weekly)' : 'Total income (weekly)';
+        els.avgWeeklyTile.style.display = isVar ? 'block' : 'none';
+
+        calc(); // re-compute when mode changes
+      }
+
+      function initWeeks(defaultCount = 4){
+        els.weeksList.innerHTML = '';
+        for (let i = 1; i <= defaultCount; i++){
+          els.weeksList.appendChild(createWeekRow(i));
+        }
+      }
+
+      // Events for variable weeks
+      els.addWeekBtn.addEventListener('click', () => {
+        const count = els.weeksList.querySelectorAll('.week-item').length;
+        els.weeksList.appendChild(createWeekRow(count + 1));
+        bindVarInputs(); calc();
+      });
+      els.removeWeekBtn.addEventListener('click', () => {
+        const items = els.weeksList.querySelectorAll('.week-item');
+        if (items.length) items[items.length - 1].remove();
+        calc();
+      });
+      els.clearWeeksBtn.addEventListener('click', () => {
+        initWeeks(0); calc();
+      });
+
+      function bindVarInputs(){
+        els.weeksList.querySelectorAll('.varHours').forEach(inp => {
+          ['input','change'].forEach(ev => inp.addEventListener(ev, calc));
+        });
       }
 
       function calc(){
         const curr = els.currency.value || '£';
         const rate = parseFloat(els.hourly.value);
-        const hrs = parseFloat(els.hours.value);
         const annual = parseFloat(els.annual.value);
-        const mMult = monthMultiplier(els.monthBasis?.value || '4');
 
         // reset error
         els.err.style.display = 'none';
         els.err.textContent = '';
 
-        // validation
-        const hasNeg = (
-          (els.hourly.value && rate < 0) ||
-          (els.hours.value && hrs < 0) ||
-          (els.annual.value && annual < 0)
-        );
+        // Validation
+        let hasNeg = false;
+        if (els.hourly.value && rate < 0) hasNeg = true;
+        if (els.annual.value && annual < 0) hasNeg = true;
+        if (!els.modeVar.checked && els.hoursWeek.value && parseFloat(els.hoursWeek.value) < 0) hasNeg = true;
+        els.weeksList.querySelectorAll('.varHours').forEach(inp => {
+          if (inp.value && parseFloat(inp.value) < 0) hasNeg = true;
+        });
         if (hasNeg){
           els.err.textContent = 'Values cannot be negative.';
           els.err.style.display = 'block';
         }
 
-        // hourly earnings (weekly)
+        const salaryWeek = !isNaN(annual) ? (annual / 52) : 0;
+        const salaryMonth = !isNaN(annual) ? (annual / 12) : 0;
+
         let hourlyWeek = 0;
-        if (!isNaN(rate) && !isNaN(hrs)){
-          hourlyWeek = rate * hrs;
+        let hourlyMonth = 0;
+
+        if (!isNaN(rate)){
+          if (els.modeVar.checked){
+            // Variable weekly: use sum for monthly; average for weekly view
+            const hoursArr = getVarHours();
+            const sumHours = hoursArr.reduce((a,b) => a + b, 0);
+            const avgHours = hoursArr.length ? (sumHours / hoursArr.length) : NaN;
+
+            hourlyMonth = sumHours * rate; // monthly hourly earnings from actual weeks
+            hourlyWeek = !isNaN(avgHours) ? (avgHours * rate) : 0;
+
+            // Show averages and breakdown
+            els.avgHours.textContent = fmtPlain(avgHours);
+            els.avgWeeklyEarnings.textContent = fmt(curr, hourlyWeek);
+            renderPerWeekBreakdown(rate, curr);
+          } else {
+            // Fixed weekly: compute weekly, then monthly via basis multiplier
+            const hrs = parseFloat(els.hoursWeek.value);
+            if (!isNaN(hrs)){
+              hourlyWeek = rate * hrs;
+              const mult = monthMultiplier(els.monthBasis.value || '4');
+              hourlyMonth = hourlyWeek * mult;
+            } else {
+              hourlyWeek = 0;
+              hourlyMonth = 0;
+            }
+            // Hide per-week breakdown in fixed mode
+            els.perWeekBreakdown.style.display = 'none';
+          }
         }
 
-        // salary portions
-        let salaryWeek = 0, salaryMonth = 0;
-        if (!isNaN(annual)){
-          salaryWeek = annual / 52;
-          salaryMonth = annual / 12;
-        }
-
-        // monthly hourly using selected basis
-        const hourlyMonth = hourlyWeek * mMult;
-
-        // totals
+        // Totals
         const totalWeek = (hourlyWeek || 0) + (salaryWeek || 0);
         const totalMonth = (hourlyMonth || 0) + (salaryMonth || 0);
 
-        // update UI
+        // Update UI
         els.hourlyWeek.textContent = fmt(curr, hourlyWeek);
         els.salaryWeek.textContent = fmt(curr, salaryWeek);
         els.totalWeek.textContent = fmt(curr, totalWeek);
@@ -779,14 +851,19 @@
         els.totalMonth.textContent = fmt(curr, totalMonth);
       }
 
+      // Bind common events
       ['input','change'].forEach(ev => {
-        [els.currency, els.hourly, els.hours, els.annual, els.monthBasis].forEach(el => el.addEventListener(ev, calc));
+        [els.currency, els.hourly, els.annual].forEach(el => el.addEventListener(ev, calc));
+      });
+      ['input','change'].forEach(ev => {
+        [els.hoursWeek, els.monthBasis, els.modeFixed, els.modeVar].forEach(el => el.addEventListener(ev, () => { toggleMode(); }));
       });
 
-      // initial
-      calc();
+      // Init
+      initWeeks(4);
+      bindVarInputs();
+      toggleMode();  // set initial visibility & compute
     })();
   </script>
 </body>
 </html>
-``
