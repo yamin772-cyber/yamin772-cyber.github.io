@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -218,7 +217,7 @@
       pointer-events: none;
     }
 
-    /* --- NEW: small helpers for Hangman controls --- */
+    /* --- small helpers for controls --- */
     .btn {
       padding: 10px 14px;
       border-radius: 10px;
@@ -234,8 +233,30 @@
       border: 1px solid rgba(0,255,255,0.15);
       background: #0e1726;
       color: var(--text);
+      width: 100%;
     }
     .board { margin-top: 12px; }
+
+    /* NEW: hint style */
+    .hint { color: var(--muted); font-size: 0.92rem; }
+
+    /* NEW: Earnings Calculator styles */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
+    .tile {
+      border: 1px solid rgba(0,255,255,0.12);
+      background: #0e1726;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 8px;
+    }
+    .tile .label { color: var(--muted); font-size: 0.95rem; }
+    .amt { font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
+    .amt.ok { color: var(--ok); }
 
     /* Responsive tweaks */
     @media (max-width: 640px) {
@@ -258,7 +279,9 @@
         <a class="nav-btn" href="#about">About</a>
         <a class="nav-btn" href="#projects">Projects</a>
         <a class="nav-btn" href="#skills">Skills</a>
-        <!-- NEW: Hangman link -->
+        <!-- NEW: Earnings Calculator link -->
+        <a class="nav-btn" href="#calculator">Earnings Calculator</a>
+        <!-- Hangman link -->
         <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
       </nav>
@@ -336,7 +359,87 @@
       </div>
     </section>
 
-    <!-- ======= NEW: HANGMAN (Text-Based) ======= -->
+    <!-- ======= NEW: Earnings Calculator ======= -->
+    <section id="calculator">
+      <h3>Earnings Calculator</h3>
+      <p class="hint">
+        Enter your hourly rate and weekly hours. Optionally add an annual salary to combine both. Totals show for <strong>weekly</strong> and <strong>monthly</strong>.
+      </p>
+
+      <!-- Inputs -->
+      <div class="calc-grid" style="margin-top:10px;">
+        <div class="calc-field">
+          <label for="calcCurrency">Currency</label>
+          <select id="calcCurrency" class="input" aria-label="Currency">
+            <option value="£" selected>£ (GBP)</option>
+            <option value="$">$ (USD)</option>
+            <option value="€">€ (EUR)</option>
+            <option value="₹">₹ (INR)</option>
+            <option value="C$">C$ (CAD)</option>
+            <option value="A$">A$ (AUD)</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="calcHourly">Hourly rate</label>
+          <input type="number" id="calcHourly" class="input" min="0" step="0.01" placeholder="e.g., 25.50" />
+          <p class="hint">Your pay per hour.</p>
+        </div>
+        <div class="calc-field">
+          <label for="calcHours">Hours per week</label>
+          <input type="number" id="calcHours" class="input" min="0" step="0.01" placeholder="e.g., 40" />
+          <p class="hint">Typical weekly hours.</p>
+        </div>
+        <div class="calc-field">
+          <label for="calcAnnual">Annual salary (optional)</label>
+          <input type="number" id="calcAnnual" class="input" min="0" step="0.01" placeholder="e.g., 52000" />
+          <p class="hint">Combined with hourly earnings.</p>
+        </div>
+      </div>
+
+      <!-- Validation -->
+      <div id="calcError" class="hint" role="alert" aria-live="polite" style="margin-top:8px;color:var(--danger);display:none;"></div>
+
+      <!-- Outputs -->
+      <div class="grid" aria-live="polite" style="margin-top:12px;">
+        <div class="card">
+          <h4>Weekly Totals</h4>
+          <div class="tile">
+            <div class="label">Hourly earnings</div>
+            <div id="calcHourlyWeek" class="amt"></div>
+          </div>
+          <div class="tile">
+            <div class="label">Salary portion</div>
+            <div id="calcSalaryWeek" class="amt"></div>
+          </div>
+          <div class="tile">
+            <div class="label">Total income</div>
+            <div id="calcTotalWeek" class="amt ok"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Monthly Totals</h4>
+          <div class="tile">
+            <div class="label">Hourly earnings</div>
+            <div id="calcHourlyMonth" class="amt"></div>
+          </div>
+          <div class="tile">
+            <div class="label">Salary portion</div>
+            <div id="calcSalaryMonth" class="amt"></div>
+          </div>
+          <div class="tile">
+            <div class="label">Total income</div>
+            <div id="calcTotalMonth" class="amt ok"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint" style="margin-top:8px;">
+        Assumptions: Weekly salary = Annual ÷ 52. Monthly salary = Annual ÷ 12. Monthly hourly proxy uses average weeks/month (52 ÷ 12 ≈ 4.333).
+      </p>
+    </section>
+
+    <!-- ======= HANGMAN (Text-Based) ======= -->
     <section id="hangman">
       <h3>Hangman (Text-Based)</h3>
       <p class="hint">
@@ -436,7 +539,7 @@
       draw();
     })();
 
-    /* ======= HANGMAN (Text-Based, with dictionary) — NEW ======= */
+    /* ======= HANGMAN (Text-Based, with dictionary) ======= */
     (function hangman() {
       const MAX_WRONG = 6;
 
@@ -492,7 +595,7 @@
       |
 =========`];
 
-      // Dictionary (lowercase, letters only). You can expand this list.
+      // Dictionary (lowercase, letters only).
       const DICTIONARY = [
         "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench","bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk","chart","chase","check","chess","chief","child","clean","clear","clock","close","cloud","coach","coast","color","count","cover","craft","crane","crash","crazy","cream","crowd","dance","debug","delta","depth","daily","draft","drive","earth","eager","email","energy","engine","error","event","every","exact","exist","extra","faith","fancy","fault","field","fight","final","flame","focus","force","fresh","front","fruit","globe","grant","graph","green","guess","happy","harsh","heart","heavy","honor","human","ideal","image","index","input","issue","jelly","joint","judge","knock","label","laser","lemon","level","light","limit","linen","logic","lucky","lunch","magic","major","match","metal","model","money","month","motor","mount","music","noble","noise","north","novel","nurse","occur","ocean","offer","optic","order","other","paint","panel","paper","party","peace","phone","pilot","pitch","pixel","plant","point","power","press","price","prime","print","proud","proxy","query","quick","quiet","radio","raise","range","ratio","react","ready","relax","reply","reset","river","robot","route","royal","ruler","scale","scene","scope","score","serve","shift","shirt","shock","short","smart","smile","smoke","solid","solve","sound","south","space","spare","speak","speed","spice","spike","sport","staff","stage","stair","stand","start","steel","stick","stone","store","storm","story","study","style","sugar","suite","super","sweet","table","taste","teach","techy","tiger","tight","title","today","token","tools","trace","track","trade","train","trust","truth","tutor","under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat","wheel","while","white","whole","world","worry","worth","write","young","zesty"
       ];
@@ -586,8 +689,6 @@
         els.share.textContent = "";
         renderKeyboard();
         updateStatus("New game started. Type letters or use the on-screen keyboard.");
-        // Scroll to game if user clicked New Game from elsewhere
-        // document.getElementById("hangman").scrollIntoView({ behavior: "smooth" });
       }
 
       // Keyboard input
@@ -606,6 +707,87 @@
 
       // Init
       newGame();
+    })();
+
+    /* ======= NEW: Earnings Calculator JS ======= */
+    (function earningsCalc(){
+      const els = {
+        currency: document.getElementById('calcCurrency'),
+        hourly: document.getElementById('calcHourly'),
+        hours: document.getElementById('calcHours'),
+        annual: document.getElementById('calcAnnual'),
+        err: document.getElementById('calcError'),
+        // Outputs
+        hourlyWeek: document.getElementById('calcHourlyWeek'),
+        salaryWeek: document.getElementById('calcSalaryWeek'),
+        totalWeek: document.getElementById('calcTotalWeek'),
+        hourlyMonth: document.getElementById('calcHourlyMonth'),
+        salaryMonth: document.getElementById('calcSalaryMonth'),
+        totalMonth: document.getElementById('calcTotalMonth'),
+      };
+
+      function fmt(curr, num){
+        if (isNaN(num) || !isFinite(num)) return `${curr}—`;
+        return `${curr}${num.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
+      }
+
+      function calc(){
+        const curr = els.currency.value || '£';
+        const rate = parseFloat(els.hourly.value);
+        const hrs = parseFloat(els.hours.value);
+        const annual = parseFloat(els.annual.value);
+
+        // reset error
+        els.err.style.display = 'none';
+        els.err.textContent = '';
+
+        // validation
+        const hasNeg = (
+          (els.hourly.value && rate < 0) ||
+          (els.hours.value && hrs < 0) ||
+          (els.annual.value && annual < 0)
+        );
+        if (hasNeg){
+          els.err.textContent = 'Values cannot be negative.';
+          els.err.style.display = 'block';
+        }
+
+        // hourly earnings (weekly)
+        let hourlyWeek = 0;
+        if (!isNaN(rate) && !isNaN(hrs)){
+          hourlyWeek = rate * hrs;
+        }
+
+        // salary portions
+        let salaryWeek = 0, salaryMonth = 0;
+        if (!isNaN(annual)){
+          salaryWeek = annual / 52;
+          salaryMonth = annual / 12;
+        }
+
+        // monthly hourly proxy = weekly hourly * (52/12)
+        const hourlyMonth = hourlyWeek * (52/12);
+
+        // totals
+        const totalWeek = (hourlyWeek || 0) + (salaryWeek || 0);
+        const totalMonth = (hourlyMonth || 0) + (salaryMonth || 0);
+
+        // update UI
+        els.hourlyWeek.textContent = fmt(curr, hourlyWeek);
+        els.salaryWeek.textContent = fmt(curr, salaryWeek);
+        els.totalWeek.textContent = fmt(curr, totalWeek);
+
+        els.hourlyMonth.textContent = fmt(curr, hourlyMonth);
+        els.salaryMonth.textContent = fmt(curr, salaryMonth);
+        els.totalMonth.textContent = fmt(curr, totalMonth);
+      }
+
+      ['input','change'].forEach(ev => {
+        [els.currency, els.hourly, els.hours, els.annual].forEach(el => el.addEventListener(ev, calc));
+      });
+
+      // initial
+      calc();
     })();
   </script>
 </body>
