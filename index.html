@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -217,7 +218,7 @@
       pointer-events: none;
     }
 
-    /* --- small helpers for controls --- */
+    /* Helpers for controls */
     .btn {
       padding: 10px 14px;
       border-radius: 10px;
@@ -237,10 +238,10 @@
     }
     .board { margin-top: 12px; }
 
-    /* NEW: hint style */
+    /* Hint style */
     .hint { color: var(--muted); font-size: 0.92rem; }
 
-    /* NEW: Earnings Calculator styles */
+    /* Earnings Calculator styles */
     .calc-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -279,9 +280,7 @@
         <a class="nav-btn" href="#about">About</a>
         <a class="nav-btn" href="#projects">Projects</a>
         <a class="nav-btn" href="#skills">Skills</a>
-        <!-- NEW: Earnings Calculator link -->
-        <a class="nav-btn" href="#calculator">Earnings Calculator</a>
-        <!-- Hangman link -->
+        <a class="nav-btn" href="#calculator">Earnings Calculator</a> <!-- NEW -->
         <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
       </nav>
@@ -341,29 +340,12 @@
       </div>
     </section>
 
-    <section id="skills">
-      <h3>Skills</h3>
-      <div class="grid">
-        <div class="card">
-          <h4>Service Desk</h4>
-          <p>Incident handling, SLA awareness, ticket maintenance, stakeholder management, escalations, reporting.</p>
-        </div>
-        <div class="card">
-          <h4>Tooling</h4>
-          <p>PowerShell, Python, Excel, Sharepoint, Power Apps, Power Automate, APIs, ITSM platforms.</p>
-        </div>
-        <div class="card">
-          <h4>Practices</h4>
-          <p>Documentation, root cause analysis, automation first thinking.</p>
-        </div>
-      </div>
-    </section>
-
     <!-- ======= NEW: Earnings Calculator ======= -->
     <section id="calculator">
       <h3>Earnings Calculator</h3>
       <p class="hint">
-        Enter your hourly rate and weekly hours. Optionally add an annual salary to combine both. Totals show for <strong>weekly</strong> and <strong>monthly</strong>.
+        Enter your hourly rate and weekly hours. Optionally add an annual salary to combine both.
+        Totals show for <strong>weekly</strong> and <strong>monthly</strong>.
       </p>
 
       <!-- Inputs -->
@@ -379,20 +361,33 @@
             <option value="A$">A$ (AUD)</option>
           </select>
         </div>
+
         <div class="calc-field">
           <label for="calcHourly">Hourly rate</label>
-          <input type="number" id="calcHourly" class="input" min="0" step="0.01" placeholder="e.g., 25.50" />
+          <input type="number" id="calcHourly" class="input" min="0" step="0.01" placeholder="e.g., 15" />
           <p class="hint">Your pay per hour.</p>
         </div>
+
         <div class="calc-field">
           <label for="calcHours">Hours per week</label>
           <input type="number" id="calcHours" class="input" min="0" step="0.01" placeholder="e.g., 40" />
           <p class="hint">Typical weekly hours.</p>
         </div>
+
         <div class="calc-field">
           <label for="calcAnnual">Annual salary (optional)</label>
           <input type="number" id="calcAnnual" class="input" min="0" step="0.01" placeholder="e.g., 52000" />
           <p class="hint">Combined with hourly earnings.</p>
+        </div>
+
+        <!-- NEW: Monthly basis selector -->
+        <div class="calc-field">
+          <label for="calcMonthBasis">Monthly basis</label>
+          <select id="calcMonthBasis" class="input" aria-label="Monthly basis">
+            <option value="4" selected>4‑week month (x4)</option>
+            <option value="avg">Calendar average (52 ÷ 12 ≈ 4.333)</option>
+          </select>
+          <p class="hint">Choose how to convert weekly to monthly.</p>
         </div>
       </div>
 
@@ -435,7 +430,11 @@
       </div>
 
       <p class="hint" style="margin-top:8px;">
-        Assumptions: Weekly salary = Annual ÷ 52. Monthly salary = Annual ÷ 12. Monthly hourly proxy uses average weeks/month (52 ÷ 12 ≈ 4.333).
+        Assumptions:
+        Weekly salary = Annual ÷ 52.
+        Monthly salary = Annual ÷ 12.
+        Monthly hourly earnings use your selected basis:
+        <em>4‑week month</em> (×4) or <em>calendar average</em> (52 ÷ 12 ≈ 4.333).
       </p>
     </section>
 
@@ -709,13 +708,14 @@
       newGame();
     })();
 
-    /* ======= NEW: Earnings Calculator JS ======= */
+    /* ======= NEW: Earnings Calculator JS (with monthly basis toggle) ======= */
     (function earningsCalc(){
       const els = {
         currency: document.getElementById('calcCurrency'),
         hourly: document.getElementById('calcHourly'),
         hours: document.getElementById('calcHours'),
         annual: document.getElementById('calcAnnual'),
+        monthBasis: document.getElementById('calcMonthBasis'),
         err: document.getElementById('calcError'),
         // Outputs
         hourlyWeek: document.getElementById('calcHourlyWeek'),
@@ -731,11 +731,17 @@
         return `${curr}${num.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
       }
 
+      function monthMultiplier(basis){
+        // basis: "4" => 4-week fixed month; "avg" => 52/12 ≈ 4.333
+        return basis === 'avg' ? (52/12) : 4;
+      }
+
       function calc(){
         const curr = els.currency.value || '£';
         const rate = parseFloat(els.hourly.value);
         const hrs = parseFloat(els.hours.value);
         const annual = parseFloat(els.annual.value);
+        const mMult = monthMultiplier(els.monthBasis?.value || '4');
 
         // reset error
         els.err.style.display = 'none';
@@ -765,8 +771,8 @@
           salaryMonth = annual / 12;
         }
 
-        // monthly hourly proxy = weekly hourly * (52/12)
-        const hourlyMonth = hourlyWeek * (52/12);
+        // monthly hourly using selected basis
+        const hourlyMonth = hourlyWeek * mMult;
 
         // totals
         const totalWeek = (hourlyWeek || 0) + (salaryWeek || 0);
@@ -783,7 +789,7 @@
       }
 
       ['input','change'].forEach(ev => {
-        [els.currency, els.hourly, els.hours, els.annual].forEach(el => el.addEventListener(ev, calc));
+        [els.currency, els.hourly, els.hours, els.annual, els.monthBasis].forEach(el => el.addEventListener(ev, calc));
       });
 
       // initial
@@ -792,3 +798,4 @@
   </script>
 </body>
 </html>
+``
