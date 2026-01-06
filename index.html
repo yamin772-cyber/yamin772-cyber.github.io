@@ -1,12 +1,12 @@
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>Yamin — Tech Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Yamin — Tech-themed personal site and portfolio" />
-  <meta name="theme-color" content="#0ff" />
+  <meta name="theme-color" content="#00ffff" />
 
   <!-- Open Graph / Social -->
   <meta property="og:title" content="Yamin — Tech Portfolio" />
@@ -15,13 +15,11 @@
   <meta property="og:image" content="https://dummyimage.com/1200x630/0a0a0a/00ffff&text=YAMIN" />
 
   <style>
-    /* --- Theme variables: dark/light via [data-theme] --- */
+    /* --- Single theme (dark neon) --- */
     :root {
       --transition-fast: 160ms;
       --transition-medium: 240ms;
-    }
 
-    [data-theme="dark"] {
       --bg: #0a0a0f;
       --panel: #101018;
       --text: #e6f7ff;
@@ -39,24 +37,6 @@
       --overlay-grid-a: rgba(0,255,255,0.06);
       --overlay-grid-b: rgba(255,0,255,0.04);
     }
-    [data-theme="light"] {
-      --bg: #f7fbff;
-      --panel: #ffffff;
-      --text: #0e1726;
-      --muted: #384a5a;
-      --primary: #06b6d4;   /* teal/cyan */
-      --accent: #c026d3;    /* magenta-purple */
-      --ok: #059669;
-      --warn: #b45309;
-      --danger: #dc2626;
-      --card: #f0f7ff;
-      --ring: rgba(6,182,212,0.3);
-      --matrix: rgba(6,182,212,0.7);
-      --bg-grad-a: rgba(6,182,212,0.08);
-      --bg-grad-b: rgba(192,38,211,0.05);
-      --overlay-grid-a: rgba(6,182,212,0.08);
-      --overlay-grid-b: rgba(192,38,211,0.06);
-    }
 
     * { box-sizing: border-box; }
     html, body {
@@ -69,7 +49,6 @@
       font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       line-height: 1.65;
       margin: 0;
-      transition: background-color var(--transition-medium) ease, color var(--transition-medium) ease;
     }
 
     /* Subtle circuit/grid overlay */
@@ -89,25 +68,15 @@
     a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 
     /* Header */
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 24px;
-      border: 1px solid rgba(0,255,255,0.15);
-      border-radius: 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 24px; border: 1px solid rgba(0,255,255,0.15); border-radius: 20px;
       background: linear-gradient(180deg, rgba(16,24,32,0.7), rgba(16,24,32,0.4));
       backdrop-filter: blur(6px);
       box-shadow: 0 0 40px rgba(0,255,255,0.12), inset 0 0 20px rgba(255,0,255,0.08);
-      transition: box-shadow var(--transition-medium) ease;
     }
 
     .brand { display: flex; align-items: center; gap: 14px; }
@@ -126,25 +95,19 @@
 
     nav { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
     .nav-btn {
-      position: relative;
-      overflow: hidden; /* for ripple */
+      position: relative; overflow: hidden;
       padding: 10px 14px; border-radius: 12px;
       border: 1px solid rgba(0,255,255,0.15);
       background: rgba(12,16,24,0.6); color: var(--text);
-      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow, color var(--transition-fast) ease, border-color var(--transition-fast) ease;
+      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow;
     }
     .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
     .nav-btn.active::after {
-      content: "";
-      position: absolute; left: 12px; right: 12px; bottom: 4px;
+      content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px;
       height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent));
-      border-radius: 2px;
-      animation: underlinePulse 1.2s ease-in-out infinite;
+      border-radius: 2px; animation: underlinePulse 1.2s ease-in-out infinite;
     }
-    @keyframes underlinePulse {
-      0%, 100% { opacity: 0.5; transform: scaleX(0.9); }
-      50% { opacity: 1; transform: scaleX(1); }
-    }
+    @keyframes underlinePulse { 0%,100%{opacity:.5;transform:scaleX(.9)} 50%{opacity:1;transform:scaleX(1)} }
 
     /* Hero */
     .hero {
@@ -158,32 +121,24 @@
     .hero p { color: var(--muted); margin: 0 0 16px; }
 
     .cta {
-      position: relative;
-      display: inline-flex; align-items: center; gap: 8px;
+      position: relative; display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 16px; background: linear-gradient(90deg, var(--primary), var(--accent));
       color: #041314; font-weight: 700; border-radius: 12px; border: none;
-      box-shadow: 0 0 24px rgba(0,255,255,0.4);
-      cursor: pointer; transition: 160ms ease transform, 160ms ease filter;
-      overflow: hidden; /* ripple */
+      box-shadow: 0 0 24px rgba(0,255,255,0.4); cursor: pointer; transition: 160ms ease transform, 160ms ease filter;
+      overflow: hidden;
     }
     .cta:hover { transform: translateY(-2px); filter: brightness(1.08); }
     .cta::before {
       content: ""; position: absolute; inset: 0;
       background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.25) 20%, transparent 40%);
-      transform: translateX(-100%);
-      animation: shimmer 2.2s ease-in-out infinite;
-      pointer-events: none;
+      transform: translateX(-100%); animation: shimmer 2.2s ease-in-out infinite; pointer-events: none;
     }
-    @keyframes shimmer {
-      0% { transform: translateX(-120%); }
-      100% { transform: translateX(120%); }
-    }
+    @keyframes shimmer { 0%{transform:translateX(-120%)} 100%{transform:translateX(120%)} }
 
     /* Sections */
     section { margin-top: 28px; padding: 24px; background: var(--card);
       border: 1px solid rgba(0,255,255,0.12); border-radius: 20px;
       box-shadow: 0 0 24px rgba(0,255,255,0.08);
-      transition: background-color var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
     }
     section h3 { margin-top: 0; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
@@ -206,46 +161,25 @@
     /* --- Tech Stack badges (fixed tooltip + dot alignment) --- */
     .badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
     .badge {
-      position: relative;
-      display: flex;
-      flex-wrap: nowrap;         /* dot + first line stay together */
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #0e1726;
-      color: var(--text);
-      border: 1px solid rgba(0,255,255,0.12);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      overflow: visible;         /* allow tooltip above */
-      transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+      position: relative; display: flex; flex-wrap: nowrap; align-items: center; gap: 8px;
+      padding: 10px 12px; border-radius: 12px; background: #0e1726; color: var(--text);
+      border: 1px solid rgba(0,255,255,0.12); box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      overflow: visible; transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
     }
     .badge:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.25); }
-    .badge .dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-      box-shadow: 0 0 12px var(--ring);
-      flex: 0 0 auto; align-self: center;
-    }
-    .badge .text {
-      flex: 1 1 auto;
-      white-space: normal; word-break: break-word; line-height: 1.25;
-    }
+    .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--ring); flex: 0 0 auto; align-self: center; }
+    .badge .text { flex: 1 1 auto; white-space: normal; word-break: break-word; line-height: 1.25; }
     .badge[data-tip]::after {
-      content: attr(data-tip);
-      position: absolute;
-      left: 0; right: 0; bottom: 100%;
-      margin-bottom: 6px; padding: 4px 8px;
-      background: var(--panel); border: 1px solid rgba(0,255,255,0.25);
+      content: attr(data-tip); position: absolute; left: 0; right: 0; bottom: 100%;
+      margin-bottom: 6px; padding: 4px 8px; background: var(--panel); border: 1px solid rgba(0,255,255,0.25);
       border-radius: 8px; font-size: 11px; color: var(--muted);
-      opacity: 0; transform: translateY(6px);
-      pointer-events: none;
-      transition: opacity 0.18s ease, transform 0.18s ease;
+      opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease;
       white-space: normal; z-index: 999;
     }
     .badge:hover::after { opacity: 1; transform: translateY(0); }
     .badge[data-long="true"] { font-size: 0.92rem; }
 
-    /* ==== Calculator styles (matching your original look) ==== */
+    /* ==== Calculator styles (original look) ==== */
     .hint { color: var(--muted); font-size: 0.92rem; }
     .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
@@ -263,15 +197,9 @@
     @media (max-width: 500px) { #perWeekList.landscape-list { grid-template-columns: repeat(1, 1fr); } }
 
     /* Inputs/buttons */
-    .btn {
-      padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2);
-      background: #121a27; color: var(--text); cursor: pointer;
-    }
+    .btn { padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2); background: #121a27; color: var(--text); cursor: pointer; }
     .btn:hover { box-shadow: 0 0 12px rgba(255,0,255,0.18); }
-    .input {
-      padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,255,255,0.15);
-      background: #0e1726; color: var(--text); width: 100%;
-    }
+    .input { padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,255,255,0.15); background: #0e1726; color: var(--text); width: 100%; }
 
     /* Footer */
     footer { margin: 40px 0 24px; color: var(--muted); text-align: center; font-size: 14px; }
@@ -282,33 +210,15 @@
       filter: blur(0.3px) saturate(120%); pointer-events: none;
     }
 
-    /* Ripple element (created via JS) */
-    .ripple {
-      position: absolute; border-radius: 50%;
-      transform: scale(0); pointer-events: none;
-      background: rgba(255,255,255,0.6);
-      animation: ripple 500ms ease-out forwards;
-      mix-blend-mode: overlay;
-    }
+    /* Ripple element */
+    .ripple { position: absolute; border-radius: 50%; transform: scale(0); pointer-events: none; background: rgba(255,255,255,0.6); animation: ripple 500ms ease-out forwards; mix-blend-mode: overlay; }
     @keyframes ripple { to { transform: scale(10); opacity: 0; } }
-
-    /* Theme toggle switch */
-    .theme-toggle {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 12px; border-radius: 12px;
-      border: 1px solid rgba(0,255,255,0.15);
-      background: rgba(12,16,24,0.6); color: var(--text);
-      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow;
-    }
-    .theme-toggle:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
 
     /* Responsive tweaks */
     @media (max-width: 640px) {
       nav { justify-content: center; }
       header { flex-direction: column; align-items: flex-start; }
     }
-
-    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
       .cta::before { display: none; }
@@ -333,10 +243,7 @@
         <a class="nav-btn" href="#calculator">Earnings Calculator</a>
         <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
-        <!-- Theme toggle -->
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
-          🌙 Dark
-        </button>
+        <!-- Dark mode toggle removed -->
       </nav>
     </header>
 
@@ -448,7 +355,7 @@
       </div>
     </section>
 
-    <!-- ======= Earnings Calculator (Fixed + Variable hours) ======= -->
+    <!-- ======= Earnings Calculator ======= -->
     <section id="calculator">
       <h3>Earnings Calculator</h3>
       <p class="hint">
@@ -536,7 +443,6 @@
             <div class="label" id="weeklyTotalLabel">Total income (weekly)</div>
             <div id="calcTotalWeek" class="amt ok"></div>
           </div>
-          <!-- Variable mode: average weekly info -->
           <div class="tile" id="avgWeeklyTile" style="display:none;">
             <div class="label">Average weekly hours (variable)</div>
             <div id="calcAvgHours" class="amt"></div>
@@ -562,14 +468,14 @@
         </div>
       </div>
 
-      <!-- Variable mode: per-week breakdown (4-across grid) -->
+      <!-- Variable mode: per-week breakdown -->
       <div class="card" id="perWeekBreakdown" style="margin-top:12px; display:none;">
         <h4>Per‑week earnings breakdown</h4>
         <div id="perWeekList" class="landscape-list"></div>
       </div>
     </section>
 
-    <!-- ======= HANGMAN (Text-Based) ======= -->
+    <!-- ======= Hangman ======= -->
     <section id="hangman">
       <h3>Hangman (Text-Based)</h3>
       <p class="hint">
@@ -631,32 +537,7 @@
     // Set current year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // ===== THEME: Respect system, toggle, and persist =====
-    (function themeInit() {
-      const root = document.documentElement;
-      const btn = document.getElementById("themeToggle");
-      if (!btn) return;
-
-      const stored = localStorage.getItem("theme");
-      const systemPrefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-      const initial = stored ? stored : (systemPrefersLight ? "light" : "dark");
-      setTheme(initial);
-
-      function setTheme(theme) {
-        root.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-        btn.textContent = theme === "dark" ? "🌙 Dark" : "☀️ Light";
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", theme === "dark" ? "#00ffff" : "#06b6d4");
-        document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
-      }
-      btn.addEventListener("click", () => {
-        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-        setTheme(next);
-      });
-    })();
-
-    // ===== Matrix animation (theme-aware) =====
+    // Matrix animation (fixed color)
     (function matrixRain(){
       const canvas = document.getElementById("matrix");
       const ctx = canvas.getContext("2d");
@@ -673,12 +554,7 @@
       resize();
       window.addEventListener("resize", resize);
 
-      function getMatrixColor(){
-        const styles = getComputedStyle(document.documentElement);
-        return styles.getPropertyValue("--matrix") || "rgba(0,255,255,0.85)";
-      }
-      let color = getMatrixColor();
-      document.addEventListener("themechange", () => { color = getMatrixColor(); });
+      const color = getComputedStyle(document.documentElement).getPropertyValue("--matrix") || "rgba(0,255,255,0.85)";
 
       function draw() {
         ctx.fillStyle = "rgba(4, 12, 16, 0.25)";
@@ -700,9 +576,8 @@
       draw();
     })();
 
-    // ===== Micro‑interactions =====
+    // Micro‑interactions: ripple, card tilt, active nav highlight
     (function microInteractions(){
-      // Ripple effect on click (nav buttons, generic .btn, .cta)
       const rippleTargets = document.querySelectorAll(".nav-btn, .btn, .cta");
       rippleTargets.forEach(el => {
         el.addEventListener("click", (e) => {
@@ -718,7 +593,6 @@
         });
       });
 
-      // Card tilt / parallax on pointer move
       const cards = document.querySelectorAll(".card");
       cards.forEach(card => {
         card.addEventListener("pointermove", (e) => {
@@ -734,7 +608,6 @@
         });
       });
 
-      // Active section link highlighting via IntersectionObserver
       const links = Array.from(document.querySelectorAll('nav a.nav-btn[href^="#"]'));
       const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
       const observer = new IntersectionObserver(entries => {
@@ -755,11 +628,9 @@
       });
     })();
 
-    /* ======= Hangman (Text-Based, robust hard mode) ======= */
+    // Hangman
     (function hangman() {
       const MAX_WRONG = 6;
-
-      // ASCII gallows for 0..6 wrong guesses
       const GALLOWS = [
 `  +---+
   |   |
@@ -811,7 +682,6 @@
       |
 =========`];
 
-      // Base dictionary (4–8 letters)
       const BASE = [
         "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench",
         "bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk",
@@ -833,7 +703,6 @@
         "under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat",
         "wheel","while","white","whole","world","worry","worth","write","young","zesty"
       ];
-      // Longer words (7–10) for hard mode
       const HARD_EXTRA = [
         "support","service","monitor","configure","security","network","printer","virtual","endpoint",
         "automate","platform","workflow","incident","response","hardware","software","database","operator",
@@ -863,7 +732,7 @@
         else if (mode === "medium") { min = 5; max = 8; }
         else if (mode === "hard") { min = 7; max = 10; }
         let pool = WORDS.filter(w => w.length >= min && w.length <= max);
-        if (!pool.length) pool = WORDS; // fallback
+        if (!pool.length) pool = WORDS;
         return pool;
       }
       function pickTarget() {
@@ -913,7 +782,6 @@
         } else {
           updateStatus();
         }
-
         renderKeyboard();
       }
       function newGame() {
@@ -926,76 +794,54 @@
         updateStatus("New game started. Type letters or use the on-screen keyboard.");
       }
 
-      // Keyboard input
       window.addEventListener("keydown", (e) => {
         const k = e.key.toLowerCase();
-        if (k.length === 1 && /^[a-z]$/.test(k)) {
-          onGuess(k);
-        } else if (k === "enter") {
-          if (over) newGame();
-        }
+        if (k.length === 1 && /^[a-z]$/.test(k)) onGuess(k);
+        else if (k === "enter" && over) newGame();
       });
 
-      // Hooks
       els.newGame.addEventListener("click", newGame);
       els.difficulty.addEventListener("change", newGame);
 
-      // Init
       newGame();
     })();
 
-    /* ======= Earnings Calculator JS (fixed + variable hours, original look) ======= */
+    // Earnings Calculator (fixed + variable hours)
     (function earningsCalc(){
       const els = {
         currency: document.getElementById('calcCurrency'),
         hourly: document.getElementById('calcHourly'),
         annual: document.getElementById('calcAnnual'),
-
         modeFixed: document.getElementById('calcModeFixed'),
         modeVar: document.getElementById('calcModeVar'),
-
         fixedFields: document.getElementById('fixedFields'),
         hoursWeek: document.getElementById('calcHours'),
         monthBasis: document.getElementById('calcMonthBasis'),
-
         variableFields: document.getElementById('variableFields'),
         weeksList: document.getElementById('weeksList'),
         addWeekBtn: document.getElementById('addWeekBtn'),
         removeWeekBtn: document.getElementById('removeWeekBtn'),
         clearWeeksBtn: document.getElementById('clearWeeksBtn'),
-
         err: document.getElementById('calcError'),
-
-        // Outputs
         hourlyWeek: document.getElementById('calcHourlyWeek'),
         salaryWeek: document.getElementById('calcSalaryWeek'),
         totalWeek: document.getElementById('calcTotalWeek'),
         weeklyLabel: document.getElementById('weeklyLabel'),
         weeklyTotalLabel: document.getElementById('weeklyTotalLabel'),
-
         avgWeeklyTile: document.getElementById('avgWeeklyTile'),
         avgHours: document.getElementById('calcAvgHours'),
         avgWeeklyEarnings: document.getElementById('calcAvgWeeklyEarnings'),
-
         hourlyMonth: document.getElementById('calcHourlyMonth'),
         salaryMonth: document.getElementById('calcSalaryMonth'),
         totalMonth: document.getElementById('calcTotalMonth'),
-
         perWeekBreakdown: document.getElementById('perWeekBreakdown'),
         perWeekList: document.getElementById('perWeekList'),
       };
 
-      function fmt(curr, num){
-        if (isNaN(num) || !isFinite(num)) return `${curr}—`;
-        return `${curr}${num.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`;
-      }
-      function fmtPlain(num){
-        if (isNaN(num) || !isFinite(num)) return '—';
-        return `${num.toLocaleString(undefined,{maximumFractionDigits:2})}`;
-      }
+      function fmt(curr, num){ if (isNaN(num) || !isFinite(num)) return `${curr}—`; return `${curr}${num.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})}`; }
+      function fmtPlain(num){ if (isNaN(num) || !isFinite(num)) return '—'; return `${num.toLocaleString(undefined,{maximumFractionDigits:2})}`; }
       function monthMultiplier(basis){ return basis === 'avg' ? (52/12) : 4; }
 
-      // Variable weeks data model
       function createWeekRow(index, hoursVal = ''){
         const div = document.createElement('div');
         div.className = 'week-item';
@@ -1005,17 +851,12 @@
         `;
         return div;
       }
-
       function getVarHours(){
         const inputs = els.weeksList.querySelectorAll('.varHours');
         const hours = [];
-        inputs.forEach(inp => {
-          const v = parseFloat(inp.value);
-          if (!isNaN(v)) hours.push(Math.max(0, v));
-        });
+        inputs.forEach(inp => { const v = parseFloat(inp.value); if (!isNaN(v)) hours.push(Math.max(0, v)); });
         return hours;
       }
-
       function renderPerWeekBreakdown(rate, curr){
         const hours = getVarHours();
         els.perWeekList.innerHTML = '';
@@ -1030,27 +871,20 @@
         });
         els.perWeekBreakdown.style.display = hours.length ? 'block' : 'none';
       }
-
       function toggleMode(){
         const isVar = els.modeVar.checked;
         els.fixedFields.style.display = isVar ? 'none' : 'block';
         els.variableFields.style.display = isVar ? 'block' : 'none';
-
         els.weeklyLabel.textContent = isVar ? 'Hourly earnings (average week)' : 'Hourly earnings (fixed week)';
         els.weeklyTotalLabel.textContent = isVar ? 'Total income (average weekly)' : 'Total income (weekly)';
         els.avgWeeklyTile.style.display = isVar ? 'block' : 'none';
-
-        calc(); // re-compute when mode changes
+        calc();
       }
-
       function initWeeks(defaultCount = 4){
         els.weeksList.innerHTML = '';
-        for (let i = 1; i <= defaultCount; i++){
-          els.weeksList.appendChild(createWeekRow(i));
-        }
+        for (let i = 1; i <= defaultCount; i++){ els.weeksList.appendChild(createWeekRow(i)); }
       }
 
-      // Variable weeks controls
       els.addWeekBtn.addEventListener('click', () => {
         const count = els.weeksList.querySelectorAll('.week-item').length;
         els.weeksList.appendChild(createWeekRow(count + 1));
@@ -1061,9 +895,7 @@
         if (items.length) items[items.length - 1].remove();
         calc();
       });
-      els.clearWeeksBtn.addEventListener('click', () => {
-        initWeeks(0); calc();
-      });
+      els.clearWeeksBtn.addEventListener('click', () => { initWeeks(0); calc(); });
 
       function bindVarInputs(){
         els.weeksList.querySelectorAll('.varHours').forEach(inp => {
@@ -1076,44 +908,32 @@
         const rate = parseFloat(els.hourly.value);
         const annual = parseFloat(els.annual.value);
 
-        // reset error
-        els.err.style.display = 'none';
-        els.err.textContent = '';
-
-        // Validation
+        els.err.style.display = 'none'; els.err.textContent = '';
         let hasNeg = false;
         if (els.hourly.value && rate < 0) hasNeg = true;
         if (els.annual.value && annual < 0) hasNeg = true;
         if (!els.modeVar.checked && els.hoursWeek.value && parseFloat(els.hoursWeek.value) < 0) hasNeg = true;
-        els.weeksList.querySelectorAll('.varHours').forEach(inp => {
-          if (inp.value && parseFloat(inp.value) < 0) hasNeg = true;
-        });
-        if (hasNeg){
-          els.err.textContent = 'Values cannot be negative.';
-          els.err.style.display = 'block';
-        }
+        els.weeksList.querySelectorAll('.varHours').forEach(inp => { if (inp.value && parseFloat(inp.value) < 0) hasNeg = true; });
+        if (hasNeg){ els.err.textContent = 'Values cannot be negative.'; els.err.style.display = 'block'; }
 
         const salaryWeek = !isNaN(annual) ? (annual / 52) : 0;
         const salaryMonth = !isNaN(annual) ? (annual / 12) : 0;
 
-        let hourlyWeek = 0;
-        let hourlyMonth = 0;
+        let hourlyWeek = 0, hourlyMonth = 0;
 
         if (!isNaN(rate)){
           if (els.modeVar.checked){
-            // Variable weekly: use sum for monthly; average for weekly view
             const hoursArr = getVarHours();
             const sumHours = hoursArr.reduce((a,b) => a + b, 0);
             const avgHours = hoursArr.length ? (sumHours / hoursArr.length) : NaN;
 
-            hourlyMonth = sumHours * rate; // monthly hourly earnings
+            hourlyMonth = sumHours * rate;
             hourlyWeek = !isNaN(avgHours) ? (avgHours * rate) : 0;
 
             els.avgHours.textContent = fmtPlain(avgHours);
             els.avgWeeklyEarnings.textContent = fmt(curr, hourlyWeek);
             renderPerWeekBreakdown(rate, curr);
           } else {
-            // Fixed weekly: weekly -> monthly via basis
             const hrs = parseFloat(els.hoursWeek.value);
             if (!isNaN(hrs)){
               hourlyWeek = rate * hrs;
@@ -1137,21 +957,20 @@
         els.totalMonth.textContent = fmt(curr, totalMonth);
       }
 
-      // Bind common events
       ['input','change'].forEach(ev => {
         [els.currency, els.hourly, els.annual].forEach(el => el.addEventListener(ev, calc));
       });
       ['input','change'].forEach(ev => {
         [els.hoursWeek, els.monthBasis, els.modeFixed, els.modeVar].forEach(el =>
-          el.addEventListener(ev, () => { toggleMode(); })
+          el.addEventListener(ev, toggleMode)
         );
       });
 
-      // Init
       initWeeks(4);
       bindVarInputs();
-      toggleMode();  // set initial visibility & compute
+      toggleMode();
     })();
   </script>
 </body>
 </html>
+``
