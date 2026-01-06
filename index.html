@@ -44,8 +44,8 @@
       --panel: #ffffff;
       --text: #0e1726;
       --muted: #384a5a;
-      --primary: #06b6d4;   /* teal/cyan */
-      --accent: #c026d3;    /* magenta-purple */
+      --primary: #06b6d4;
+      --accent: #c026d3;
       --ok: #059669;
       --warn: #b45309;
       --danger: #dc2626;
@@ -207,7 +207,7 @@
     }
     .tag:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.05); }
 
-    /* Tech Stack badges */
+    /* Tech Stack badges + tooltip above to avoid overlap */
     .badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
     .badge {
       position: relative;
@@ -219,58 +219,51 @@
       overflow: hidden;
     }
     .badge:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.25); }
-    .badge .dot {
-      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-      box-shadow: 0 0 12px var(--ring);
-    }
+    .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--ring); }
     .badge .text { white-space: normal; word-break: break-word; line-height: 1.25; }
-
-    /* Tooltip ABOVE badge to avoid overlap */
-    .badge[data-tip] { position: relative; }
     .badge[data-tip]::after {
       content: attr(data-tip);
       position: absolute;
       left: 0; right: 0; bottom: 100%;
-      margin-bottom: 6px;
-      padding: 4px 8px;
-      background: var(--panel);
-      border: 1px solid rgba(0,255,255,0.25);
-      border-radius: 8px;
-      font-size: 11px; color: var(--muted);
-      opacity: 0; transform: translateY(6px);
-      pointer-events: none;
+      margin-bottom: 6px; padding: 4px 8px;
+      background: var(--panel); border: 1px solid rgba(0,255,255,0.25);
+      border-radius: 8px; font-size: 11px; color: var(--muted);
+      opacity: 0; transform: translateY(6px); pointer-events: none;
       transition: opacity 0.18s ease, transform 0.18s ease;
-      white-space: normal;
-      z-index: 999;
+      white-space: normal; z-index: 999;
     }
     .badge:hover::after { opacity: 1; transform: translateY(0); }
     .badge[data-long="true"] { font-size: 0.92rem; }
 
-    /* Calculator tiles & amounts (bold + green) */
+    /* ==== Calculator styles (matching your original look) ==== */
+    .hint { color: var(--muted); font-size: 0.92rem; }
+
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
+
     .tile { border: 1px solid rgba(0,255,255,0.12); background: #0e1726; border-radius: 12px; padding: 12px; margin-top: 8px; }
     .tile .label { color: var(--muted); font-size: 0.95rem; }
     .amt { font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
     .amt.ok { color: var(--ok); }
 
-    /* VARIABLE HOURS LIST */
     .weeks-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; }
     .week-item { background:#0e1726; border:1px solid rgba(0,255,255,0.12); border-radius:10px; padding:10px; }
     .week-item label { font-size: 0.85rem; color: var(--muted); display:block; margin-bottom: 6px; }
 
-    /* Per‑week breakdown: EXACTLY 4 across on desktop */
-    #perWeekList.landscape-list {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      padding-bottom: 8px;
+    /* Per‑week breakdown: EXACTLY 4 across on desktop, as requested */
+    #perWeekList.landscape-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-bottom: 8px; }
+    @media (max-width: 900px) { #perWeekList.landscape-list { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { #perWeekList.landscape-list { grid-template-columns: repeat(1, 1fr); } }
+
+    /* Inputs/buttons look */
+    .btn {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2);
+      background: #121a27; color: var(--text); cursor: pointer;
     }
-    /* Tablet: 2 across */
-    @media (max-width: 900px) {
-      #perWeekList.landscape-list { grid-template-columns: repeat(2, 1fr); }
-    }
-    /* Mobile: 1 across */
-    @media (max-width: 500px) {
-      #perWeekList.landscape-list { grid-template-columns: repeat(1, 1fr); }
+    .btn:hover { box-shadow: 0 0 12px rgba(255,0,255,0.18); }
+    .input {
+      padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,255,255,0.15);
+      background: #0e1726; color: var(--text); width: 100%;
     }
 
     /* Footer */
@@ -394,7 +387,7 @@
       </div>
     </section>
 
-    <!-- ======= Skills (existing anchor retained) ======= -->
+    <!-- ======= Skills ======= -->
     <section id="skills">
       <h3>Skills</h3>
       <div class="grid">
@@ -703,7 +696,7 @@
 
     // ===== MICRO‑INTERACTIONS =====
     (function microInteractions(){
-      // 1) Ripple effect on click (nav buttons, generic .btn, .cta)
+      // Ripple effect on click (nav buttons, generic .btn, .cta)
       const rippleTargets = document.querySelectorAll(".nav-btn, .btn, .cta");
       rippleTargets.forEach(el => {
         el.addEventListener("click", (e) => {
@@ -719,14 +712,14 @@
         });
       });
 
-      // 2) Card tilt / parallax on pointer move
+      // Card tilt / parallax on pointer move
       const cards = document.querySelectorAll(".card");
       cards.forEach(card => {
         card.addEventListener("pointermove", (e) => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          const rotateY = ((x / rect.width) - 0.5) * 6;  // max 6deg
+          const rotateY = ((x / rect.width) - 0.5) * 6;
           const rotateX = -((y / rect.height) - 0.5) * 6;
           card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
@@ -735,7 +728,7 @@
         });
       });
 
-      // 3) Active section link highlighting via IntersectionObserver
+      // Active section link highlighting via IntersectionObserver
       const links = Array.from(document.querySelectorAll('nav a.nav-btn[href^="#"]'));
       const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
       const observer = new IntersectionObserver(entries => {
@@ -756,7 +749,7 @@
       });
     })();
 
-    /* ======= HANGMAN (Text-Based, with robust HARD mode) ======= */
+    /* ======= HANGMAN (Text-Based, robust hard mode) ======= */
     (function hangman() {
       const MAX_WRONG = 6;
 
@@ -812,7 +805,6 @@
       |
 =========`];
 
-      // Base dictionary (mostly 4–8 letters)
       const BASE = [
         "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench",
         "bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk",
@@ -834,14 +826,11 @@
         "under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat",
         "wheel","while","white","whole","world","worry","worth","write","young","zesty"
       ];
-
-      // Extra longer words (7–10 letters) so HARD never fails
       const HARD_EXTRA = [
         "support","service","monitor","configure","security","network","printer","virtual","endpoint",
         "automate","platform","workflow","incident","response","hardware","software","database","operator",
         "settings","policies","reporting","dashboard","scripting","migration","automation","management"
       ];
-
       const WORDS = BASE.concat(HARD_EXTRA);
 
       const els = {
@@ -870,16 +859,13 @@
         if (!pool.length) pool = WORDS; // safety fallback
         return pool;
       }
-
       function pickTarget() {
         const pool = filterByDifficulty(els.difficulty.value);
         return pool[Math.floor(Math.random() * pool.length)];
       }
-
       function maskWord() {
         return target.split("").map(ch => guessed.has(ch) ? ch.toUpperCase() : "_").join(" ");
       }
-
       function renderKeyboard() {
         els.keyboard.innerHTML = "";
         const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -894,14 +880,12 @@
           els.keyboard.appendChild(btn);
         }
       }
-
       function updateStatus(message) {
         els.status.textContent = message || `Wrong: ${wrong}/${MAX_WRONG}`;
         els.guessed.textContent = "Guessed: " + [...guessed].map(c => c.toUpperCase()).join(" ");
         els.gallows.textContent = GALLOWS[wrong];
         els.word.textContent = maskWord();
       }
-
       function onGuess(letter) {
         if (over) return;
         if (!/^[a-z]$/.test(letter)) return;
@@ -925,7 +909,6 @@
 
         renderKeyboard();
       }
-
       function newGame() {
         target = pickTarget();
         guessed = new Set();
@@ -954,7 +937,7 @@
       newGame();
     })();
 
-    /* ======= Earnings Calculator JS (fixed + variable hours) ======= */
+    /* ======= Earnings Calculator JS (fixed + variable hours, original look) ======= */
     (function earningsCalc(){
       const els = {
         currency: document.getElementById('calcCurrency'),
@@ -1060,7 +1043,7 @@
         }
       }
 
-      // Events for variable weeks
+      // Variable weeks controls
       els.addWeekBtn.addEventListener('click', () => {
         const count = els.weeksList.querySelectorAll('.week-item').length;
         els.weeksList.appendChild(createWeekRow(count + 1));
@@ -1119,7 +1102,6 @@
             hourlyMonth = sumHours * rate; // monthly hourly earnings from actual weeks
             hourlyWeek = !isNaN(avgHours) ? (avgHours * rate) : 0;
 
-            // Show averages and breakdown
             els.avgHours.textContent = fmtPlain(avgHours);
             els.avgWeeklyEarnings.textContent = fmt(curr, hourlyWeek);
             renderPerWeekBreakdown(rate, curr);
@@ -1157,18 +1139,17 @@
       ['input','change'].forEach(ev => {
         [els.currency, els.hourly, els.annual].forEach(el => el.addEventListener(ev, calc));
       });
-    
-            [els.hoursWeek, els.monthBasis, els.modeFixed, els.modeVar].forEach(el =>
-              el.addEventListener(ev, () => { toggleMode(); })
-            );
-          });
+      ['input','change'].forEach(ev => {
+        [els.hoursWeek, els.monthBasis, els.modeFixed, els.modeVar].forEach(el =>
+          el.addEventListener(ev, () => { toggleMode(); })
+        );
+      });
 
-          // Init
-          initWeeks(4);
-          bindVarInputs();
-          toggleMode();  // set initial visibility & compute
-        })();
-      </script>
-    </body>
-    </html>
-
+      // Init
+      initWeeks(4);
+      bindVarInputs();
+      toggleMode();  // set initial visibility & compute
+    })();
+  </script>
+</body>
+</html>
