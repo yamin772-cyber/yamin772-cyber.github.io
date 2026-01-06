@@ -44,8 +44,8 @@
       --panel: #ffffff;
       --text: #0e1726;
       --muted: #384a5a;
-      --primary: #06b6d4;
-      --accent: #c026d3;
+      --primary: #06b6d4;   /* teal/cyan */
+      --accent: #c026d3;    /* magenta-purple */
       --ok: #059669;
       --warn: #b45309;
       --danger: #dc2626;
@@ -117,7 +117,6 @@
       box-shadow: 0 0 30px rgba(0,255,255,0.4);
       position: relative; isolation: isolate;
       transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease, filter var(--transition-fast) ease;
-      will-change: transform;
     }
     .logo::after {
       content: "Y"; position: absolute; inset: 0; display: grid; place-items: center;
@@ -135,7 +134,6 @@
       cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow, color var(--transition-fast) ease, border-color var(--transition-fast) ease;
     }
     .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
-    .nav-btn.active { outline: none; }
     .nav-btn.active::after {
       content: "";
       position: absolute; left: 12px; right: 12px; bottom: 4px;
@@ -155,7 +153,6 @@
       border: 1px solid rgba(255,0,255,0.15);
       box-shadow: 0 0 40px rgba(255,0,255,0.12), inset 0 0 24px rgba(0,255,255,0.08);
       position: relative; overflow: hidden;
-      transition: box-shadow var(--transition-medium) ease;
     }
     .hero h2 { font-size: clamp(22px, 5vw, 32px); margin: 0 0 8px; }
     .hero p { color: var(--muted); margin: 0 0 16px; }
@@ -195,7 +192,6 @@
       background: linear-gradient(180deg, rgba(8,12,18,0.9), rgba(8,12,18,0.7));
       border: 1px solid rgba(255,0,255,0.12); box-shadow: 0 0 18px rgba(255,0,255,0.08);
       transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
-      will-change: transform;
       perspective: 800px;
     }
     .card:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.25); }
@@ -207,20 +203,33 @@
     }
     .tag:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.05); }
 
-    /* Tech Stack badges + tooltip above to avoid overlap */
+    /* --- Tech Stack badges (fixed tooltip + dot alignment) --- */
     .badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
     .badge {
       position: relative;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-      padding: 10px 12px; border-radius: 12px; background: #0e1726; color: var(--text);
+      display: flex;
+      flex-wrap: nowrap;         /* dot + first line stay together */
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #0e1726;
+      color: var(--text);
       border: 1px solid rgba(0,255,255,0.12);
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      overflow: visible;         /* allow tooltip above */
       transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
-      overflow: hidden;
     }
     .badge:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.25); }
-    .badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--ring); }
-    .badge .text { white-space: normal; word-break: break-word; line-height: 1.25; }
+    .badge .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 12px var(--ring);
+      flex: 0 0 auto; align-self: center;
+    }
+    .badge .text {
+      flex: 1 1 auto;
+      white-space: normal; word-break: break-word; line-height: 1.25;
+    }
     .badge[data-tip]::after {
       content: attr(data-tip);
       position: absolute;
@@ -228,7 +237,8 @@
       margin-bottom: 6px; padding: 4px 8px;
       background: var(--panel); border: 1px solid rgba(0,255,255,0.25);
       border-radius: 8px; font-size: 11px; color: var(--muted);
-      opacity: 0; transform: translateY(6px); pointer-events: none;
+      opacity: 0; transform: translateY(6px);
+      pointer-events: none;
       transition: opacity 0.18s ease, transform 0.18s ease;
       white-space: normal; z-index: 999;
     }
@@ -237,25 +247,22 @@
 
     /* ==== Calculator styles (matching your original look) ==== */
     .hint { color: var(--muted); font-size: 0.92rem; }
-
     .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
-
     .tile { border: 1px solid rgba(0,255,255,0.12); background: #0e1726; border-radius: 12px; padding: 12px; margin-top: 8px; }
     .tile .label { color: var(--muted); font-size: 0.95rem; }
     .amt { font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
     .amt.ok { color: var(--ok); }
-
     .weeks-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; }
     .week-item { background:#0e1726; border:1px solid rgba(0,255,255,0.12); border-radius:10px; padding:10px; }
     .week-item label { font-size: 0.85rem; color: var(--muted); display:block; margin-bottom: 6px; }
 
-    /* Per‑week breakdown: EXACTLY 4 across on desktop, as requested */
+    /* Per‑week breakdown grid */
     #perWeekList.landscape-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-bottom: 8px; }
     @media (max-width: 900px) { #perWeekList.landscape-list { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 500px) { #perWeekList.landscape-list { grid-template-columns: repeat(1, 1fr); } }
 
-    /* Inputs/buttons look */
+    /* Inputs/buttons */
     .btn {
       padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2);
       background: #121a27; color: var(--text); cursor: pointer;
@@ -628,9 +635,8 @@
     (function themeInit() {
       const root = document.documentElement;
       const btn = document.getElementById("themeToggle");
-      if (!btn) return; // guard
+      if (!btn) return;
 
-      // Initial theme: localStorage -> system preference -> default dark
       const stored = localStorage.getItem("theme");
       const systemPrefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
       const initial = stored ? stored : (systemPrefersLight ? "light" : "dark");
@@ -650,7 +656,7 @@
       });
     })();
 
-    // ===== Simple matrix-like animation (theme-aware) =====
+    // ===== Matrix animation (theme-aware) =====
     (function matrixRain(){
       const canvas = document.getElementById("matrix");
       const ctx = canvas.getContext("2d");
@@ -694,7 +700,7 @@
       draw();
     })();
 
-    // ===== MICRO‑INTERACTIONS =====
+    // ===== Micro‑interactions =====
     (function microInteractions(){
       // Ripple effect on click (nav buttons, generic .btn, .cta)
       const rippleTargets = document.querySelectorAll(".nav-btn, .btn, .cta");
@@ -749,7 +755,7 @@
       });
     })();
 
-    /* ======= HANGMAN (Text-Based, robust hard mode) ======= */
+    /* ======= Hangman (Text-Based, robust hard mode) ======= */
     (function hangman() {
       const MAX_WRONG = 6;
 
@@ -805,6 +811,7 @@
       |
 =========`];
 
+      // Base dictionary (4–8 letters)
       const BASE = [
         "about","after","again","agent","agree","ahead","apple","apply","array","audio","basic","beach","bench",
         "bloom","board","brave","brief","bring","cable","camel","carry","catch","cause","chain","chair","chalk",
@@ -826,6 +833,7 @@
         "under","union","urban","usual","valid","value","video","vivid","voice","watch","water","whale","wheat",
         "wheel","while","white","whole","world","worry","worth","write","young","zesty"
       ];
+      // Longer words (7–10) for hard mode
       const HARD_EXTRA = [
         "support","service","monitor","configure","security","network","printer","virtual","endpoint",
         "automate","platform","workflow","incident","response","hardware","software","database","operator",
@@ -854,9 +862,8 @@
         if (mode === "easy") { min = 4; max = 6; }
         else if (mode === "medium") { min = 5; max = 8; }
         else if (mode === "hard") { min = 7; max = 10; }
-
         let pool = WORDS.filter(w => w.length >= min && w.length <= max);
-        if (!pool.length) pool = WORDS; // safety fallback
+        if (!pool.length) pool = WORDS; // fallback
         return pool;
       }
       function pickTarget() {
@@ -1099,37 +1106,32 @@
             const sumHours = hoursArr.reduce((a,b) => a + b, 0);
             const avgHours = hoursArr.length ? (sumHours / hoursArr.length) : NaN;
 
-            hourlyMonth = sumHours * rate; // monthly hourly earnings from actual weeks
+            hourlyMonth = sumHours * rate; // monthly hourly earnings
             hourlyWeek = !isNaN(avgHours) ? (avgHours * rate) : 0;
 
             els.avgHours.textContent = fmtPlain(avgHours);
             els.avgWeeklyEarnings.textContent = fmt(curr, hourlyWeek);
             renderPerWeekBreakdown(rate, curr);
           } else {
-            // Fixed weekly: compute weekly, then monthly via basis multiplier
+            // Fixed weekly: weekly -> monthly via basis
             const hrs = parseFloat(els.hoursWeek.value);
             if (!isNaN(hrs)){
               hourlyWeek = rate * hrs;
               const mult = monthMultiplier(els.monthBasis.value || '4');
               hourlyMonth = hourlyWeek * mult;
             } else {
-              hourlyWeek = 0;
-              hourlyMonth = 0;
+              hourlyWeek = 0; hourlyMonth = 0;
             }
-            // Hide per-week breakdown in fixed mode
             els.perWeekBreakdown.style.display = 'none';
           }
         }
 
-        // Totals
         const totalWeek = (hourlyWeek || 0) + (salaryWeek || 0);
         const totalMonth = (hourlyMonth || 0) + (salaryMonth || 0);
 
-        // Update UI
         els.hourlyWeek.textContent = fmt(curr, hourlyWeek);
         els.salaryWeek.textContent = fmt(curr, salaryWeek);
         els.totalWeek.textContent = fmt(curr, totalWeek);
-
         els.hourlyMonth.textContent = fmt(curr, hourlyMonth);
         els.salaryMonth.textContent = fmt(curr, salaryMonth);
         els.totalMonth.textContent = fmt(curr, totalMonth);
