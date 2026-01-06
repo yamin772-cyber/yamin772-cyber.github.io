@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <title>Yamin — Tech Portfolio</title>
@@ -15,8 +15,13 @@
   <meta property="og:image" content="https://dummyimage.com/1200x630/0a0a0a/00ffff&text=YAMIN" />
 
   <style>
-    /* --- Tech Theme: Neon on dark, grid, glow, and subtle animation --- */
+    /* --- Theme variables: dark/light via [data-theme] --- */
     :root {
+      --transition-fast: 160ms;
+      --transition-medium: 240ms;
+    }
+
+    [data-theme="dark"] {
       --bg: #0a0a0f;
       --panel: #101018;
       --text: #e6f7ff;
@@ -28,18 +33,43 @@
       --danger: #ff4d6d;      /* pink/red */
       --card: #121926;
       --ring: rgba(0, 255, 255, 0.3);
+      --matrix: rgba(0,255,255,0.85);
+      --bg-grad-a: rgba(0,255,255,0.08);
+      --bg-grad-b: rgba(255,0,255,0.05);
+      --overlay-grid-a: rgba(0,255,255,0.06);
+      --overlay-grid-b: rgba(255,0,255,0.04);
+    }
+    [data-theme="light"] {
+      --bg: #f7fbff;
+      --panel: #ffffff;
+      --text: #0e1726;
+      --muted: #384a5a;
+      --primary: #06b6d4;   /* teal/cyan */
+      --accent: #c026d3;    /* magenta-purple */
+      --ok: #059669;
+      --warn: #b45309;
+      --danger: #dc2626;
+      --card: #f0f7ff;
+      --ring: rgba(6,182,212,0.3);
+      --matrix: rgba(6,182,212,0.7);
+      --bg-grad-a: rgba(6,182,212,0.08);
+      --bg-grad-b: rgba(192,38,211,0.05);
+      --overlay-grid-a: rgba(6,182,212,0.08);
+      --overlay-grid-b: rgba(192,38,211,0.06);
     }
 
     * { box-sizing: border-box; }
     html, body {
       height: 100%;
-      background: radial-gradient(1000px 500px at 10% 10%, rgba(0,255,255,0.08), transparent),
-                  radial-gradient(800px 400px at 90% 30%, rgba(255,0,255,0.05), transparent),
-                  var(--bg);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, var(--bg-grad-a), transparent),
+        radial-gradient(800px 400px at 90% 30%, var(--bg-grad-b), transparent),
+        var(--bg);
       color: var(--text);
       font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
       line-height: 1.65;
       margin: 0;
+      transition: background-color var(--transition-medium) ease, color var(--transition-medium) ease;
     }
 
     /* Subtle circuit/grid overlay */
@@ -48,9 +78,9 @@
       position: fixed;
       inset: 0;
       background-image:
-        radial-gradient(circle at 12px 12px, rgba(0,255,255,0.06) 2px, transparent 2px),
-        linear-gradient(transparent 23px, rgba(255,0,255,0.04) 24px),
-        linear-gradient(90deg, transparent 23px, rgba(0,255,255,0.04) 24px);
+        radial-gradient(circle at 12px 12px, var(--overlay-grid-a) 2px, transparent 2px),
+        linear-gradient(transparent 23px, var(--overlay-grid-b) 24px),
+        linear-gradient(90deg, transparent 23px, var(--overlay-grid-a) 24px);
       background-size: 24px 24px, 24px 24px, 24px 24px;
       pointer-events: none;
       mix-blend-mode: overlay;
@@ -77,6 +107,7 @@
       background: linear-gradient(180deg, rgba(16,24,32,0.7), rgba(16,24,32,0.4));
       backdrop-filter: blur(6px);
       box-shadow: 0 0 40px rgba(0,255,255,0.12), inset 0 0 20px rgba(255,0,255,0.08);
+      transition: box-shadow var(--transition-medium) ease;
     }
 
     .brand { display: flex; align-items: center; gap: 14px; }
@@ -85,22 +116,40 @@
       background: conic-gradient(from 180deg at 50% 50%, var(--primary), var(--accent), var(--primary));
       box-shadow: 0 0 30px rgba(0,255,255,0.4);
       position: relative; isolation: isolate;
+      transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease, filter var(--transition-fast) ease;
+      will-change: transform;
     }
     .logo::after {
       content: "Y"; position: absolute; inset: 0; display: grid; place-items: center;
       font-weight: 800; color: #041314; text-shadow: 0 0 6px rgba(0,255,255,0.6);
     }
+    .logo:hover { transform: rotate(12deg) scale(1.06); filter: saturate(130%); box-shadow: 0 0 40px var(--ring); }
+
     .title h1 { margin: 0; font-size: clamp(24px, 5vw, 36px); letter-spacing: 0.02em; }
     .title p { margin: 4px 0 0 0; color: var(--muted); font-size: 14px; }
 
-    nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    nav { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
     .nav-btn {
+      position: relative;
+      overflow: hidden; /* for ripple */
       padding: 10px 14px; border-radius: 12px;
       border: 1px solid rgba(0,255,255,0.15);
       background: rgba(12,16,24,0.6); color: var(--text);
-      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow;
+      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow, color var(--transition-fast) ease, border-color var(--transition-fast) ease;
     }
     .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
+    .nav-btn.active { outline: none; }
+    .nav-btn.active::after {
+      content: "";
+      position: absolute; left: 12px; right: 12px; bottom: 4px;
+      height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      animation: underlinePulse 1.2s ease-in-out infinite;
+    }
+    @keyframes underlinePulse {
+      0%, 100% { opacity: 0.5; transform: scaleX(0.9); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
 
     /* Hero */
     .hero {
@@ -109,22 +158,38 @@
       border: 1px solid rgba(255,0,255,0.15);
       box-shadow: 0 0 40px rgba(255,0,255,0.12), inset 0 0 24px rgba(0,255,255,0.08);
       position: relative; overflow: hidden;
+      transition: box-shadow var(--transition-medium) ease;
     }
     .hero h2 { font-size: clamp(22px, 5vw, 32px); margin: 0 0 8px; }
     .hero p { color: var(--muted); margin: 0 0 16px; }
+
     .cta {
+      position: relative;
       display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 16px; background: linear-gradient(90deg, var(--primary), var(--accent));
       color: #041314; font-weight: 700; border-radius: 12px; border: none;
       box-shadow: 0 0 24px rgba(0,255,255,0.4);
       cursor: pointer; transition: 160ms ease transform, 160ms ease filter;
+      overflow: hidden; /* ripple */
     }
-    .cta:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .cta:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .cta::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.25) 20%, transparent 40%);
+      transform: translateX(-100%);
+      animation: shimmer 2.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
 
     /* Sections */
     section { margin-top: 28px; padding: 24px; background: var(--card);
       border: 1px solid rgba(0,255,255,0.12); border-radius: 20px;
       box-shadow: 0 0 24px rgba(0,255,255,0.08);
+      transition: background-color var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
     }
     section h3 { margin-top: 0; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
@@ -132,9 +197,44 @@
       padding: 16px; border-radius: 14px;
       background: linear-gradient(180deg, rgba(8,12,18,0.9), rgba(8,12,18,0.7));
       border: 1px solid rgba(255,0,255,0.12); box-shadow: 0 0 18px rgba(255,0,255,0.08);
+      transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+      will-change: transform;
+      perspective: 800px;
     }
+    .card:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.25); }
+
     .card h4 { margin: 0 0 6px; }
-    .tag { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; color: #041314; background: var(--primary); margin-right: 8px; }
+    .tag {
+      display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; color: #041314;
+      background: var(--primary); margin-right: 8px; transition: transform var(--transition-fast) ease, filter var(--transition-fast) ease;
+    }
+    .tag:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.05); }
+
+    /* Tech Stack badges */
+    .badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .badge {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 12px; border-radius: 12px; background: #0e1726; color: var(--text);
+      border: 1px solid rgba(0,255,255,0.12);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+      overflow: hidden;
+    }
+    .badge:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.25); }
+    .badge .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 12px var(--ring);
+    }
+    .badge[data-tip]::after {
+      content: attr(data-tip);
+      position: absolute; bottom: 8px; left: 12px; right: 12px;
+      font-size: 11px; color: var(--muted);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity var(--transition-fast) ease, transform var(--transition-fast) ease;
+      pointer-events: none;
+    }
+    .badge:hover::after { opacity: 1; transform: translateY(0); }
 
     /* Footer */
     footer { margin: 40px 0 24px; color: var(--muted); text-align: center; font-size: 14px; }
@@ -145,38 +245,38 @@
       filter: blur(0.3px) saturate(120%); pointer-events: none;
     }
 
-    /* Helpers for controls */
-    .btn {
-      padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(255,0,255,0.2);
-      background: #121a27; color: var(--text); cursor: pointer;
+    /* Ripple element (created via JS) */
+    .ripple {
+      position: absolute; border-radius: 50%;
+      transform: scale(0); pointer-events: none;
+      background: rgba(255,255,255,0.6);
+      animation: ripple 500ms ease-out forwards;
+      mix-blend-mode: overlay;
     }
-    .btn:hover { box-shadow: 0 0 12px rgba(255,0,255,0.18); }
-    .input {
-      padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(0,255,255,0.15);
-      background: #0e1726; color: var(--text); width: 100%;
+    @keyframes ripple {
+      to { transform: scale(10); opacity: 0; }
     }
-    .board { margin-top: 12px; }
 
-    /* Hint style */
-    .hint { color: var(--muted); font-size: 0.92rem; }
-
-    /* Earnings Calculator styles */
-    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-    .calc-field label { font-weight: 600; display:block; margin-bottom: 6px; }
-    .tile { border: 1px solid rgba(0,255,255,0.12); background: #0e1726; border-radius: 12px; padding: 12px; margin-top: 8px; }
-    .tile .label { color: var(--muted); font-size: 0.95rem; }
-    .amt { font-size: 1.4rem; font-weight: 800; margin-top: 6px; }
-    .amt.ok { color: var(--ok); }
-
-    /* Variable week list */
-    .weeks-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; }
-    .week-item { background:#0e1726; border:1px solid rgba(0,255,255,0.12); border-radius:10px; padding:10px; }
-    .week-item label { font-size: 0.85rem; color: var(--muted); display:block; margin-bottom: 6px; }
+    /* Theme toggle switch */
+    .theme-toggle {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 12px;
+      border: 1px solid rgba(0,255,255,0.15);
+      background: rgba(12,16,24,0.6); color: var(--text);
+      cursor: pointer; transition: 140ms ease transform, 140ms ease box-shadow;
+    }
+    .theme-toggle:hover { transform: translateY(-1px); box-shadow: 0 0 16px var(--ring); }
 
     /* Responsive tweaks */
     @media (max-width: 640px) {
       nav { justify-content: center; }
       header { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .cta::before { display: none; }
     }
   </style>
 </head>
@@ -194,9 +294,14 @@
         <a class="nav-btn" href="#about">About</a>
         <a class="nav-btn" href="#projects">Projects</a>
         <a class="nav-btn" href="#skills">Skills</a>
+        <a class="nav-btn" href="#stack">Tech Stack</a>
         <a class="nav-btn" href="#calculator">Earnings Calculator</a>
         <a class="nav-btn" href="#hangman">Hangman</a>
         <a class="nav-btn" href="#contact">Contact</a>
+        <!-- Theme toggle -->
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+          🌙 Dark
+        </button>
       </nav>
     </header>
 
@@ -251,6 +356,60 @@
           <p>Clear, searchable knowledge base pages that reduce repetitive support tasks.</p>
           <p><strong>Tech:</strong> Markdown, static site</p>
         </div>
+      </div>
+    </section>
+
+    <!-- ======= Skills (existing anchor retained) ======= -->
+    <section id="skills">
+      <h3>Skills</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>Core</h4>
+          <p>Incident resolution, stakeholder communication, service delivery improvements, documentation.</p>
+        </div>
+        <div class="card">
+          <h4>Automation & Scripting</h4>
+          <p>Power Automate flows, lightweight Python utilities, task orchestration.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= NEW: Tech Stack ======= -->
+    <section id="stack">
+      <h3>Tech Stack</h3>
+      <p class="hint">Platforms, tools & services I use regularly.</p>
+
+      <div class="badges">
+        <!-- Cloud & Platforms -->
+        <div class="badge" data-tip="Azure platform & services"><span class="dot"></span>Azure</div>
+        <div class="badge" data-tip="Power Platform automation"><span class="dot"></span>Power Automate</div>
+        <div class="badge" data-tip="Canvas/model-driven apps"><span class="dot"></span>PowerApps</div>
+        <div class="badge" data-tip="Service management & workflows"><span class="dot"></span>ServiceNow</div>
+        <div class="badge" data-tip="ServiceNow reporting (creation & execution)"><span class="dot"></span>ServiceNow Reporting</div>
+
+        <!-- Identity & Endpoint -->
+        <div class="badge" data-tip="Directory services & group policy"><span class="dot"></span>Active Directory</div>
+        <div class="badge" data-tip="Endpoint management (Intune)"><span class="dot"></span>Intune</div>
+        <div class="badge" data-tip="Configuration Manager (SCCM)"><span class="dot"></span>Endpoint Configuration Manager</div>
+        <div class="badge" data-tip="Privileged Access Management"><span class="dot"></span>PAM</div>
+
+        <!-- EUC / Virtualisation / Remote -->
+        <div class="badge" data-tip="Citrix monitoring & insights"><span class="dot"></span>Citrix Director</div>
+        <div class="badge" data-tip="Remote Desktop Protocol"><span class="dot"></span>RDP</div>
+        <div class="badge" data-tip="EUC performance analytics"><span class="dot"></span>ControlUp</div>
+
+        <!-- Monitoring / Infra / Print -->
+        <div class="badge" data-tip="Network & system monitoring"><span class="dot"></span>SolarWinds</div>
+        <div class="badge" data-tip="Enterprise print management"><span class="dot"></span>SafeQ</div>
+        <div class="badge" data-tip="Server administration"><span class="dot"></span>Server Management</div>
+
+        <!-- Dev & Web -->
+        <div class="badge" data-tip="Scripting & automation"><span class="dot"></span>Python</div>
+        <div class="badge" data-tip="Frontend fundamentals"><span class="dot"></span>HTML/CSS/JS</div>
+
+        <!-- Other Services -->
+        <div class="badge" data-tip="IoT connectivity/management"><span class="dot"></span>Arkessa</div>
+        <div class="badge" data-tip="PKI certificates & security"><span class="dot"></span>Entrust</div>
       </div>
     </section>
 
@@ -373,6 +532,7 @@
         <h4>Per‑week earnings breakdown</h4>
         <div id="perWeekList" class="weeks-list"></div>
       </div>
+    </section>
 
     <!-- ======= HANGMAN (Text-Based) ======= -->
     <section id="hangman">
@@ -436,27 +596,63 @@
     // Set current year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Simple matrix-like animation
+    // ===== THEME: Respect system, toggle, and persist =====
+    (function themeInit() {
+      const root = document.documentElement;
+      const btn = document.getElementById("themeToggle");
+      // Initial theme: localStorage -> system prefers-color-scheme -> default dark
+      const stored = localStorage.getItem("theme");
+      const systemPrefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      const initial = stored ? stored : (systemPrefersLight ? "light" : "dark");
+      setTheme(initial);
+
+      function setTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        btn.textContent = theme === "dark" ? "🌙 Dark" : "☀️ Light";
+        // Update meta theme-color (use primary-ish)
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", theme === "dark" ? "#00ffff" : "#06b6d4");
+        // Notify matrix renderer to recolor
+        document.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
+      }
+      btn.addEventListener("click", () => {
+        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        setTheme(next);
+      });
+    })();
+
+    // ===== Simple matrix-like animation (theme-aware) =====
     (function matrixRain(){
       const canvas = document.getElementById("matrix");
       const ctx = canvas.getContext("2d");
+      let letters = "01█░▓▌▐⎺⎻⎼⎽⎺⎻⎼⎽";
+      let fontSize = 14;
+      let columns = 0;
+      let drops = [];
+
       function resize() {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(0);
       }
       resize();
       window.addEventListener("resize", resize);
 
-      const letters = "01█░▓▌▐⎺⎻⎼⎽⎺⎻⎼⎽";
-      const fontSize = 14;
-      const columns = Math.floor(canvas.width / fontSize);
-      const drops = Array(columns).fill(0);
+      function getMatrixColor(){
+        const styles = getComputedStyle(document.documentElement);
+        return styles.getPropertyValue("--matrix") || "rgba(0,255,255,0.85)";
+      }
+
+      let color = getMatrixColor();
+      document.addEventListener("themechange", () => { color = getMatrixColor(); });
 
       function draw() {
         ctx.fillStyle = "rgba(4, 12, 16, 0.25)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "rgba(0,255,255,0.85)";
+        ctx.fillStyle = color;
         ctx.font = fontSize + "px monospace";
 
         for (let i = 0; i < drops.length; i++) {
@@ -472,6 +668,62 @@
         requestAnimationFrame(draw);
       }
       draw();
+    })();
+
+    // ===== MICRO‑INTERACTIONS =====
+    (function microInteractions(){
+      // 1) Ripple effect on click (nav buttons, generic .btn, .cta)
+      const rippleTargets = document.querySelectorAll(".nav-btn, .btn, .cta");
+      rippleTargets.forEach(el => {
+        el.addEventListener("click", (e) => {
+          const rect = el.getBoundingClientRect();
+          const ripple = document.createElement("span");
+          ripple.className = "ripple";
+          const size = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = (e.clientX - rect.left - size/2) + "px";
+          ripple.style.top = (e.clientY - rect.top - size/2) + "px";
+          el.appendChild(ripple);
+          ripple.addEventListener("animationend", () => ripple.remove());
+        });
+      });
+
+      // 2) Card tilt / parallax on pointer move
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(card => {
+        card.addEventListener("pointermove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const rotateY = ((x / rect.width) - 0.5) * 6;  // max 6deg
+          const rotateX = -((y / rect.height) - 0.5) * 6;
+          card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener("pointerleave", () => {
+          card.style.transform = "rotateX(0deg) rotateY(0deg)";
+        });
+      });
+
+      // 3) Active section link highlighting via IntersectionObserver
+      const links = Array.from(document.querySelectorAll('nav a.nav-btn[href^="#"]'));
+      const map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+          const link = map.get(id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            links.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        });
+      }, { rootMargin: "-40% 0px -50% 0px", threshold: 0.1 });
+
+      // Observe top-level sections
+      ['about','projects','skills','stack','calculator','hangman','contact'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
     })();
 
     /* ======= HANGMAN (Text-Based, with dictionary) ======= */
@@ -569,14 +821,7 @@
 
       function renderKeyboard() {
         els.keyboard.innerHTML = "";
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        for (const ch of alphabet) {
-          const btn = document.createElement("button");
-          btn.className = "btn";
-          btn.textContent = ch;
-          btn.style.padding = "8px";
-          btn.style.fontWeight = "700";
-          btn.disabled = over || guessed.has(ch.toLowerCase());
+        const alphabet = "ed = over || guessed.has(ch.toLowerCase());
           btn.addEventListener("click", () => onGuess(ch.toLowerCase()));
           els.keyboard.appendChild(btn);
         }
